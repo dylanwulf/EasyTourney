@@ -17,3 +17,21 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 ****************************************************************/
 
+#include <TourneyFrame.h>
+#include <wx/wxprec.h>
+#ifndef WX_PRECOMP
+#include <wx/wx.h>
+#endif
+
+#ifndef TourneyApp_h
+#define TourneyApp_h
+
+class TourneyApp: public wxApp {
+    public:
+        virtual bool OnInit();
+    private:
+        TourneyFrame* tFrame;
+
+};
+
+#endif
