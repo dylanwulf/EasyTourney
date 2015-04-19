@@ -41,10 +41,13 @@ class CreationFrame: public wxFrame {
         wxRadioButton* singleRadio;
         wxRadioButton* doubleRadio;
         wxButton* finishButton;
+        bool closeParentWithMe;
         wxButton* cancelButton;
         void OnAdd(wxCommandEvent&);
         void OnEdit(wxCommandEvent&);
         void OnRemove(wxCommandEvent&);
+        void OnFinish(wxCommandEvent&);
+        void OnClose(wxCloseEvent&);
 
 };
 

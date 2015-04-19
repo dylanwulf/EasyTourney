@@ -18,13 +18,14 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 ****************************************************************/
 
 #include <CreationFrame.h>
+#include <Player.h>
 
 CreationFrame::CreationFrame(wxWindow* parent, const wxString& title, const wxSize& size): wxFrame(parent, wxID_ANY, title, wxDefaultPosition, size) {
     scrolledArea = new wxScrolledWindow(this);
     vbox = new wxBoxSizer(wxVERTICAL);
     wxStaticText* nameLabel = new wxStaticText(scrolledArea, wxID_ANY, "Player Name: ");
     vbox->Add(nameLabel, 0, wxLEFT | wxTOP | wxALIGN_LEFT, 10);
-    nameInput = new wxTextCtrl(scrolledArea, wxID_ANY);
+    nameInput = new wxTextCtrl(scrolledArea, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
     vbox->Add(nameInput, 0, wxALL | wxEXPAND | wxALIGN_RIGHT, 10);
 
     wxStaticText* descriptionLabel = new wxStaticText(scrolledArea, wxID_ANY, "Player Info: ");
@@ -68,17 +69,27 @@ CreationFrame::CreationFrame(wxWindow* parent, const wxString& title, const wxSi
     vbox->Add(bottomButtons, 1, wxEXPAND | wxALIGN_RIGHT);
 
     scrolledArea->SetSizer(vbox);
-    //scrolledArea->FitInside();
     scrolledArea->SetScrollRate(5, 10);
     scrolledArea->SetBackgroundColour(*wxWHITE);
+    this->SetSizeHints(wxSize(300, 400));
+    vbox->Fit(this);
     Bind(wxEVT_BUTTON, &CreationFrame::OnAdd, this, ID_addPlayerButton);
+    Bind(wxEVT_TEXT_ENTER, &CreationFrame::OnAdd, this, wxID_ANY);
     Bind(wxEVT_BUTTON, &CreationFrame::OnRemove, this, ID_removePlayerButton);
+    Bind(wxEVT_BUTTON, &CreationFrame::OnFinish, this, ID_finishButton);
+    Bind(wxEVT_CLOSE_WINDOW, &CreationFrame::OnClose, this, wxID_ANY);
+    closeParentWithMe = true;
 }
 
 void CreationFrame::OnAdd(wxCommandEvent& event){
-    if (nameInput->GetValue() != "")
-        playersList->Append(nameInput->GetValue());
+    if (nameInput->GetValue() != ""){
+        Player* player = new Player(nameInput->GetValue().ToStdString(), descriptionInput->GetValue().ToStdString());
+        playersList->Append(player->getName(), player);
+    }
     nameInput->Clear();
+    descriptionInput->Clear();
+    nameInput->SetFocus();
+    vbox->Fit(this);
 }
 
 void CreationFrame::OnEdit(wxCommandEvent& event){
@@ -86,5 +97,26 @@ void CreationFrame::OnEdit(wxCommandEvent& event){
 }
 
 void CreationFrame::OnRemove(wxCommandEvent& event){
-    playersList->Delete(playersList->GetSelection());
+    if (playersList->GetSelection() != wxNOT_FOUND){
+        playersList->Delete(playersList->GetSelection());
+        vbox->Fit(this);
+    }
+}
+
+void CreationFrame::OnFinish(wxCommandEvent& event){
+    if (playersList->GetCount() < 3){
+        wxMessageDialog* alert = new wxMessageDialog(this, "You should have at least 3 people to play a tournament.", "Alert", wxOK);
+        alert->ShowModal();
+    }
+    else{
+        closeParentWithMe = false;
+        event.Skip();
+    }
+}
+
+void CreationFrame::OnClose(wxCloseEvent& event){
+    event.Skip(true);
+    if (closeParentWithMe){
+        this->GetParent()->Close(false);
+    }
 }

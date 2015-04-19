@@ -35,6 +35,8 @@ class TourneyFrame: public wxFrame {
         wxScrolledWindow* ctrlPanel;
         wxScrolledCanvas* bracketPanel;
         void OnQuit();
+        void OnCreationFinish(wxCommandEvent&);
+        void OnCreationCancel(wxCommandEvent&);
 };
 
 #endif

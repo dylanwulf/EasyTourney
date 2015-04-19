@@ -22,9 +22,21 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 TourneyFrame::TourneyFrame(const wxString& title, const wxSize& size): wxFrame(NULL, wxID_ANY, title, wxDefaultPosition, size) {
     creation = new CreationFrame(this, "Create a New Tournament", wxSize(300, 600));
     creation->Show(true);
+    Bind(wxEVT_BUTTON, &TourneyFrame::OnCreationFinish, this, ID_finishButton);
+    Bind(wxEVT_BUTTON, &TourneyFrame::OnCreationCancel, this, ID_cancelButton);
 }
 
 void TourneyFrame::OnQuit(){
 
+}
+
+void TourneyFrame::OnCreationFinish(wxCommandEvent& event){
+    this->Show(true);
+    creation->Close(true);
+}
+
+void TourneyFrame::OnCreationCancel(wxCommandEvent& event){
+    creation->Close(true);
+    this->Close(true);
 }
 

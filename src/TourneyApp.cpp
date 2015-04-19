@@ -22,6 +22,6 @@ wxIMPLEMENT_APP(TourneyApp);
 
 bool TourneyApp::OnInit(){
     tFrame = new TourneyFrame("EasyTourney", wxSize(500, 500));
-    tFrame->Show(true);
+    //tFrame->Show(true);
     return true;
 }
