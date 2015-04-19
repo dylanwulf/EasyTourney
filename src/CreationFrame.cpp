@@ -30,7 +30,7 @@ CreationFrame::CreationFrame(wxWindow* parent, const wxString& title, const wxSi
 
     wxStaticText* descriptionLabel = new wxStaticText(scrolledArea, wxID_ANY, "Player Info: ");
     vbox->Add(descriptionLabel, 0, wxLEFT | wxTOP | wxALIGN_LEFT, 10);
-    descriptionInput = new wxTextCtrl(scrolledArea, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(-1, 75), wxTE_MULTILINE);
+    descriptionInput = new wxTextCtrl(scrolledArea, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(-1, 75), wxTE_MULTILINE | wxTE_PROCESS_ENTER);
     vbox->Add(descriptionInput, 0, wxALL | wxEXPAND, 10);
     addPlayerButton = new wxButton(scrolledArea, ID_addPlayerButton, "Add");
     vbox->Add(addPlayerButton, 0, wxALL | wxALIGN_RIGHT, 10);
@@ -51,6 +51,7 @@ CreationFrame::CreationFrame(wxWindow* parent, const wxString& title, const wxSi
     vbox->Add(buttonBox, 0, wxALIGN_CENTER, 0);
 
     randomizeBox = new wxCheckBox(scrolledArea, wxID_ANY, "Randomize player order");
+    randomizeBox->SetValue(true);
     vbox->Add(randomizeBox, 0, wxALL, 10);
 
     wxStaticText* typeLabel = new wxStaticText(scrolledArea, wxID_ANY, "Tournament type: ");
@@ -75,6 +76,7 @@ CreationFrame::CreationFrame(wxWindow* parent, const wxString& title, const wxSi
     vbox->Fit(this);
     Bind(wxEVT_BUTTON, &CreationFrame::OnAdd, this, ID_addPlayerButton);
     Bind(wxEVT_TEXT_ENTER, &CreationFrame::OnAdd, this, wxID_ANY);
+    Bind(wxEVT_BUTTON, &CreationFrame::OnEdit, this, ID_editPlayerButton);
     Bind(wxEVT_BUTTON, &CreationFrame::OnRemove, this, ID_removePlayerButton);
     Bind(wxEVT_BUTTON, &CreationFrame::OnFinish, this, ID_finishButton);
     Bind(wxEVT_CLOSE_WINDOW, &CreationFrame::OnClose, this, wxID_ANY);
@@ -93,7 +95,13 @@ void CreationFrame::OnAdd(wxCommandEvent& event){
 }
 
 void CreationFrame::OnEdit(wxCommandEvent& event){
-    
+    if (playersList->GetSelection() != wxNOT_FOUND){
+        Player* player = (Player*) playersList->GetClientData(playersList->GetSelection());
+        nameInput->SetValue(player->getName());
+        descriptionInput->SetValue(player->getDescription());
+        playersList->Delete(playersList->GetSelection());
+    }
+    nameInput->SetFocus();
 }
 
 void CreationFrame::OnRemove(wxCommandEvent& event){
@@ -101,11 +109,12 @@ void CreationFrame::OnRemove(wxCommandEvent& event){
         playersList->Delete(playersList->GetSelection());
         vbox->Fit(this);
     }
+    nameInput->SetFocus();
 }
 
 void CreationFrame::OnFinish(wxCommandEvent& event){
-    if (playersList->GetCount() < 3){
-        wxMessageDialog* alert = new wxMessageDialog(this, "You should have at least 3 people to play a tournament.", "Alert", wxOK);
+    if (playersList->GetCount() < 2){
+        wxMessageDialog* alert = new wxMessageDialog(this, "You should have at least 2 people to play a tournament.", "Alert", wxOK);
         alert->ShowModal();
     }
     else{

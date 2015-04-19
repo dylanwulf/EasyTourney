@@ -17,3 +17,13 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 ****************************************************************/
 
+#include <SingleEliminationManager.h>
+
+SingleEliminationManager::SingleEliminationManager(Player playerList[], const unsigned int numPlayers, bool randomize){
+    playerTree = new BracketTree(playerList, numPlayers);
+
+}
+
+SingleEliminationManager::drawBracket(wxDC& dc){
+
+}

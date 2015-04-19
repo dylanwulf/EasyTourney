@@ -17,3 +17,18 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 ****************************************************************/
 
+#include <BracketManager.h>
+#include <BracketTree.h>
+
+#ifndef SingleEliminationManager_h
+#define SingleEliminationManager_h
+class SingleEliminationManager: public BracketManager{
+    public:
+        SingleEliminationManager(Player playerList[], const unsigned int numPlayers, bool randomize);
+        void drawBracket(wxDC& dc);
+        void processClick(const int x, const int y);
+        void playerWon(Player p);
+    private:
+        BracketTree playerTree;
+};
+#endif

@@ -17,3 +17,19 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 ****************************************************************/
 
+#include <Player.h>
+
+#ifndef BracketTree_h
+#define BracketTree_h
+class BracketTree{
+    public:
+        BracketTree(Player playersList[], int numPlayers);
+        Player getPlayerAt(const unsigned int level, const unsigned int pos);
+        void playerWon(Player p);
+        void playerWon(const unsigned int level, const unsigned int pos);
+    private:
+        Player playerTree[];
+        unsigned int playerTreeSize;
+        unsigned int nextWinnerPos;
+};
+#endif

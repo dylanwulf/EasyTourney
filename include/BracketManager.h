@@ -17,3 +17,15 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 ****************************************************************/
 
+#include <Player.h>
+#include <wx/dc.h>
+
+#ifndef BracketManager_h
+#define BracketManager_h
+class BracketManager{
+    public:
+        virtual void drawBracket(wxDC& dc);
+        virtual void processClick(const int x, const int y);
+        virtual void playerWon(Player p);
+};
+#endif
