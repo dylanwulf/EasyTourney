@@ -76,7 +76,8 @@ CreationFrame::CreationFrame(wxWindow* parent, const wxString& title, const wxSi
 }
 
 void CreationFrame::OnAdd(wxCommandEvent& event){
-    playersList->Append(nameInput->GetValue());
+    if (nameInput->GetValue() != "")
+        playersList->Append(nameInput->GetValue());
     nameInput->Clear();
 }
 
