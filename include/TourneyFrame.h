@@ -17,6 +17,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 ****************************************************************/
 
+#include <CreationFrame.h>
 #include <wx/wxprec.h>
 #ifndef WX_PRECOMP
 #include <wx/wx.h>
@@ -27,8 +28,9 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 class TourneyFrame: public wxFrame {
     public:
-        TourneyFrame(const wxString& title, const wxPoint& pos, const wxSize& size);
+        TourneyFrame(const wxString& title, const wxSize& size);
     private:
+        CreationFrame* creation;
         wxBoxSizer* hbox;
         wxScrolledWindow* ctrlPanel;
         wxScrolledCanvas* bracketPanel;

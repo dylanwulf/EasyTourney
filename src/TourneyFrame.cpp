@@ -19,10 +19,12 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 #include <TourneyFrame.h>
 
-TourneyFrame::TourneyFrame(const wxString& title, const wxPoint& pos, const wxSize& size): wxFrame(NULL, wxID_ANY, title, pos, size) {
-
+TourneyFrame::TourneyFrame(const wxString& title, const wxSize& size): wxFrame(NULL, wxID_ANY, title, wxDefaultPosition, size) {
+    creation = new CreationFrame(this, "Create a New Tournament", wxSize(300, 500));
+    creation->Show(true);
 }
 
 void TourneyFrame::OnQuit(){
 
 }
+
