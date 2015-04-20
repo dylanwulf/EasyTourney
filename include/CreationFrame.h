@@ -17,6 +17,8 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 ****************************************************************/
 
+#include <SingleEliminationManager.h>
+//include double elimination manager when it's finished
 #include <wx/wxprec.h>
 #ifndef WX_PRECOM
 #include <wx/wx.h>
@@ -28,6 +30,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 class CreationFrame: public wxFrame {
     public:
         CreationFrame(wxWindow* parent, const wxString& title, const wxSize& size);
+        BracketManager* getBracketManager();
     private:
         wxScrolledWindow* scrolledArea;
         wxBoxSizer* vbox;

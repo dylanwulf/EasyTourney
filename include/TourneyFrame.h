@@ -18,6 +18,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 ****************************************************************/
 
 #include <CreationFrame.h>
+#include <BracketManager.h>
 #include <wx/wxprec.h>
 #ifndef WX_PRECOMP
 #include <wx/wx.h>
@@ -34,9 +35,11 @@ class TourneyFrame: public wxFrame {
         wxBoxSizer* hbox;
         wxScrolledWindow* ctrlPanel;
         wxScrolledCanvas* bracketPanel;
+        BracketManager* manager;
         void OnQuit();
         void OnCreationFinish(wxCommandEvent&);
         void OnCreationCancel(wxCommandEvent&);
+        void OnPaint(wxPaintEvent&);
 };
 
 #endif

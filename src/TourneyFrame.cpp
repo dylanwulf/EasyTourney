@@ -24,6 +24,7 @@ TourneyFrame::TourneyFrame(const wxString& title, const wxSize& size): wxFrame(N
     creation->Show(true);
     Bind(wxEVT_BUTTON, &TourneyFrame::OnCreationFinish, this, ID_finishButton);
     Bind(wxEVT_BUTTON, &TourneyFrame::OnCreationCancel, this, ID_cancelButton);
+    Bind(wxEVT_PAINT, &TourneyFrame::OnPaint, this);
 }
 
 void TourneyFrame::OnQuit(){
@@ -31,6 +32,7 @@ void TourneyFrame::OnQuit(){
 }
 
 void TourneyFrame::OnCreationFinish(wxCommandEvent& event){
+    manager = creation->getBracketManager();
     this->Show(true);
     creation->Close(true);
 }
@@ -38,5 +40,10 @@ void TourneyFrame::OnCreationFinish(wxCommandEvent& event){
 void TourneyFrame::OnCreationCancel(wxCommandEvent& event){
     creation->Close(true);
     this->Close(true);
+}
+
+void TourneyFrame::OnPaint(wxPaintEvent& event){
+    wxPaintDC dc(this);
+    manager->drawBracket(dc);
 }
 

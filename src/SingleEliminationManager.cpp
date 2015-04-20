@@ -19,11 +19,19 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 #include <SingleEliminationManager.h>
 
-SingleEliminationManager::SingleEliminationManager(Player playerList[], const unsigned int numPlayers, bool randomize){
+SingleEliminationManager::SingleEliminationManager(Player* playerList[], unsigned int numPlayers, bool randomize){
     playerTree = new BracketTree(playerList, numPlayers);
 
 }
 
-SingleEliminationManager::drawBracket(wxDC& dc){
+void SingleEliminationManager::drawBracket(wxDC& dc){
+    dc.DrawLine(0, 0, 100, 100);
+}
+
+void SingleEliminationManager::processClick(int x, int y){
+
+}
+
+void SingleEliminationManager::playerWon(Player* p){
 
 }

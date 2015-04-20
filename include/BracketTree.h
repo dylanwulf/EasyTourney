@@ -23,12 +23,12 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #define BracketTree_h
 class BracketTree{
     public:
-        BracketTree(Player playersList[], int numPlayers);
-        Player getPlayerAt(const unsigned int level, const unsigned int pos);
+        BracketTree(Player* playersList[], int numPlayers);
+        Player* getPlayerAt(const unsigned int level, const unsigned int pos);
         void playerWon(Player p);
         void playerWon(const unsigned int level, const unsigned int pos);
     private:
-        Player playerTree[];
+        Player* playerTree[];
         unsigned int playerTreeSize;
         unsigned int nextWinnerPos;
 };

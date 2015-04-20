@@ -83,6 +83,16 @@ CreationFrame::CreationFrame(wxWindow* parent, const wxString& title, const wxSi
     closeParentWithMe = true;
 }
 
+BracketManager* CreationFrame::getBracketManager(){
+    unsigned int numPlayers = playersList->GetCount();
+    Player* playersArray[numPlayers];
+    for (int i = 0; i < numPlayers; i++){
+        playersArray[i] = (Player*) playersList->GetClientData();
+    }
+    BracketManager* manager = new SingleEliminationManager(playersArray, numPlayers, randomizeBox->GetValue());
+    return manager;
+}
+
 void CreationFrame::OnAdd(wxCommandEvent& event){
     if (nameInput->GetValue() != ""){
         Player* player = new Player(nameInput->GetValue().ToStdString(), descriptionInput->GetValue().ToStdString());

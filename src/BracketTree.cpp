@@ -19,7 +19,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 #include <BracketTree.h>
 #include <cmath>
-BracketTree::BracketTree(Player playersList[], int numPlayers){
+BracketTree::BracketTree(Player* playersList[], int numPlayers){
     int log2Smashers = (int) ceil(log2(numPlayers));
     playerTreeSize = (int) pow(2, log2Smashers + 1);
     playerTree[playerTreeSize];
@@ -38,7 +38,7 @@ BracketTree::BracketTree(Player playersList[], int numPlayers){
 
 }
 
-Player BracketTree::getPlayerAt(const unsigned int level, const unsigned int pos){
+Player* BracketTree::getPlayerAt(const unsigned int level, const unsigned int pos){
     unsigned int treePos = playerTreeSize - playerTreeSize / pow(2, level) + pos;
     return playerTree[treePos];
 }

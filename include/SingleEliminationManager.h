@@ -24,11 +24,11 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #define SingleEliminationManager_h
 class SingleEliminationManager: public BracketManager{
     public:
-        SingleEliminationManager(Player playerList[], const unsigned int numPlayers, bool randomize);
+        SingleEliminationManager(Player* playerList[], unsigned int numPlayers, bool randomize);
         void drawBracket(wxDC& dc);
-        void processClick(const int x, const int y);
-        void playerWon(Player p);
+        void processClick(int x, int y);
+        void playerWon(Player* p);
     private:
-        BracketTree playerTree;
+        BracketTree* playerTree;
 };
 #endif
