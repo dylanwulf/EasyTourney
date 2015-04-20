@@ -24,12 +24,17 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 class BracketTree{
     public:
         BracketTree(Player* playersList[], int numPlayers);
+        ~BracketTree();
         Player* getPlayerAt(const unsigned int level, const unsigned int pos);
         void playerWon(Player p);
         void playerWon(const unsigned int level, const unsigned int pos);
+        unsigned int getNumLevels();
+        unsigned int getNumPlayers();
     private:
-        Player* playerTree[];
+        Player** playerTree;
         unsigned int playerTreeSize;
         unsigned int nextWinnerPos;
+        unsigned int numLevels;
+        unsigned int numPlayers;
 };
 #endif

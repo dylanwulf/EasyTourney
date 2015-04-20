@@ -22,9 +22,22 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 TourneyFrame::TourneyFrame(const wxString& title, const wxSize& size): wxFrame(NULL, wxID_ANY, title, wxDefaultPosition, size) {
     creation = new CreationFrame(this, "Create a New Tournament", wxSize(300, 600));
     creation->Show(true);
+    this->SetBackgroundColour(*wxWHITE);
+    hbox = new wxBoxSizer(wxHORIZONTAL);
+    ctrlPanel = new wxScrolledWindow(this, ID_ctrlPanel, wxDefaultPosition, wxDefaultSize, wxBORDER_SIMPLE);
+    hbox->Add(ctrlPanel, 1, wxEXPAND | wxRIGHT, 0);
+    ctrlPanel->SetScrollRate(5, 10);
+    bracketPanel = new wxScrolledCanvas(this, ID_bracketPanel, wxDefaultPosition, wxDefaultSize, wxBORDER_SIMPLE);
+    bracketPanel->SetBackgroundColour(*wxWHITE);
+    bracketPanel->SetScrollRate(10, 10);
+    wxBoxSizer* bracketSizer = new wxBoxSizer(wxHORIZONTAL);
+    bracketSizer->Add(1000, 1000, 1);
+    bracketPanel->SetSizer(bracketSizer);
+    hbox->Add(bracketPanel, 3, wxEXPAND | wxLEFT, 0);
+    this->SetSizer(hbox);
     Bind(wxEVT_BUTTON, &TourneyFrame::OnCreationFinish, this, ID_finishButton);
     Bind(wxEVT_BUTTON, &TourneyFrame::OnCreationCancel, this, ID_cancelButton);
-    Bind(wxEVT_PAINT, &TourneyFrame::OnPaint, this);
+    bracketPanel->Bind(wxEVT_PAINT, &TourneyFrame::OnBracketPanelPaint, this);
 }
 
 void TourneyFrame::OnQuit(){
@@ -42,8 +55,9 @@ void TourneyFrame::OnCreationCancel(wxCommandEvent& event){
     this->Close(true);
 }
 
-void TourneyFrame::OnPaint(wxPaintEvent& event){
-    wxPaintDC dc(this);
-    manager->drawBracket(dc);
+void TourneyFrame::OnBracketPanelPaint(wxPaintEvent& event){
+    wxPaintDC dc(bracketPanel);
+    bracketPanel->DoPrepareDC(dc);
+    manager->drawBracket(dc, 1000, 1000);
 }
 

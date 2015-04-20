@@ -39,7 +39,12 @@ class TourneyFrame: public wxFrame {
         void OnQuit();
         void OnCreationFinish(wxCommandEvent&);
         void OnCreationCancel(wxCommandEvent&);
-        void OnPaint(wxPaintEvent&);
+        void OnBracketPanelPaint(wxPaintEvent&);
+};
+
+enum {
+    ID_ctrlPanel = ID_cancelButton + 1, 
+    ID_bracketPanel
 };
 
 #endif
