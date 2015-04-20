@@ -19,13 +19,12 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 #include <BracketTree.h>
 #include <cmath>
-#include <stdlib.h>
 
 BracketTree::BracketTree(Player* playersList[], int nPlayers){
     numPlayers = nPlayers;
     int log2Smashers = (int) ceil(log2(numPlayers));
     playerTreeSize = (int) pow(2, log2Smashers + 1);
-    playerTree = (Player**) malloc(sizeof(Player*) * playerTreeSize);
+    playerTree = new Player*[playerTreeSize];
     numLevels = (int) round(log2(playerTreeSize));
     int numFirstRoundSpaces = playerTreeSize / 2;
     int numSecondRounders = playerTreeSize / 4;
@@ -42,7 +41,7 @@ BracketTree::BracketTree(Player* playersList[], int nPlayers){
 }
 
 BracketTree::~BracketTree(){
-    free(playerTree);
+    delete [] playerTree;
 }
 
 Player* BracketTree::getPlayerAt(const unsigned int level, const unsigned int pos){
