@@ -19,3 +19,5 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 #include <BracketManager.h>
 
+BracketManager::~BracketManager(){
+}

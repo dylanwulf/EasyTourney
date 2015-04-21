@@ -25,6 +25,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 class SingleEliminationManager: public BracketManager{
     public:
         SingleEliminationManager(Player* playerList[], unsigned int numPlayers, bool randomize);
+        virtual ~SingleEliminationManager();
         void drawBracket(wxDC& dc, int width, int height);
         void processClick(int x, int y);
         void playerWon(Player* p);

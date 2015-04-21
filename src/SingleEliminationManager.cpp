@@ -54,6 +54,10 @@ void SingleEliminationManager::drawBracket(wxDC& dc, int width, int height){
     }
 }
 
+SingleEliminationManager::~SingleEliminationManager(){
+    delete playerTree;
+}
+
 void SingleEliminationManager::processClick(int x, int y){
 
 }

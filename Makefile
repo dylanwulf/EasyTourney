@@ -3,8 +3,9 @@ ID = include
 SRC = src
 INC = `wx-config --cppflags` -I./$(ID)
 LIBS = `wx-config --static --libs`
+OBJS = $(BD)/TourneyApp.o $(BD)/TourneyFrame.o $(BD)/CreationFrame.o $(BD)/Player.o $(BD)/BracketTree.o $(BD)/SingleEliminationManager.o $(BD)/BracketManager.o
 
-$(BD)/EasyTourney: $(BD)/TourneyApp.o $(BD)/TourneyFrame.o $(BD)/CreationFrame.o $(BD)/Player.o $(BD)/BracketTree.o $(BD)/SingleEliminationManager.o
+$(BD)/EasyTourney: $(OBJS)
 	g++ $^ -o $@ $(LIBS)
 
 $(BD)/TourneyApp.o: $(SRC)/TourneyApp.cpp $(ID)/TourneyApp.h $(ID)/TourneyFrame.h
@@ -23,6 +24,9 @@ $(BD)/BracketTree.o: $(SRC)/BracketTree.cpp $(ID)/BracketTree.h
 	g++ $(INC) -c $< -o $@
 
 $(BD)/SingleEliminationManager.o: $(SRC)/SingleEliminationManager.cpp $(ID)/SingleEliminationManager.h $(ID)/BracketManager.h
+	g++ $(INC) -c $< -o $@
+
+$(BD)/BracketManager.o: $(SRC)/BracketManager.cpp $(ID)/BracketManager.h
 	g++ $(INC) -c $< -o $@
 
 .PHONY: clean

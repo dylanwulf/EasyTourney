@@ -30,13 +30,13 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 class TourneyFrame: public wxFrame {
     public:
         TourneyFrame(const wxString& title, const wxSize& size);
+        ~TourneyFrame();
     private:
         CreationFrame* creation;
         wxBoxSizer* hbox;
         wxScrolledWindow* ctrlPanel;
         wxScrolledCanvas* bracketPanel;
         BracketManager* manager;
-        void OnQuit();
         void OnCreationFinish(wxCommandEvent&);
         void OnCreationCancel(wxCommandEvent&);
         void OnBracketPanelPaint(wxPaintEvent&);

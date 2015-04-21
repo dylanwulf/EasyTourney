@@ -24,8 +24,9 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #define BracketManager_h
 class BracketManager{
     public:
+        virtual ~BracketManager() = 0;
         virtual void drawBracket(wxDC& dc, int width, int height) = 0;
-        virtual void processClick(const int x, const int y) = 0;
+        virtual void processClick(int x, int y) = 0;
         virtual void playerWon(Player* p) = 0;
 };
 #endif

@@ -87,7 +87,7 @@ BracketManager* CreationFrame::getBracketManager(){
     unsigned int numPlayers = playersList->GetCount();
     Player* playersArray[numPlayers];
     for (int i = 0; i < numPlayers; i++){
-        playersArray[i] = (Player*) playersList->GetClientData();
+        playersArray[i] = (Player*) playersList->GetClientData(i);
     }
     BracketManager* manager = new SingleEliminationManager(playersArray, numPlayers, randomizeBox->GetValue());
     return manager;
@@ -101,7 +101,7 @@ void CreationFrame::OnAdd(wxCommandEvent& event){
     nameInput->Clear();
     descriptionInput->Clear();
     nameInput->SetFocus();
-    vbox->Fit(this);
+    vbox->Layout();
 }
 
 void CreationFrame::OnEdit(wxCommandEvent& event){
@@ -110,14 +110,18 @@ void CreationFrame::OnEdit(wxCommandEvent& event){
         nameInput->SetValue(player->getName());
         descriptionInput->SetValue(player->getDescription());
         playersList->Delete(playersList->GetSelection());
+        delete player;
+        vbox->Layout();
     }
     nameInput->SetFocus();
 }
 
 void CreationFrame::OnRemove(wxCommandEvent& event){
     if (playersList->GetSelection() != wxNOT_FOUND){
+        Player* p = (Player*) playersList->GetClientData(playersList->GetSelection());
         playersList->Delete(playersList->GetSelection());
-        vbox->Fit(this);
+        delete p;
+        vbox->Layout();
     }
     nameInput->SetFocus();
 }
