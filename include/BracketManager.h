@@ -19,14 +19,25 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 #include <Player.h>
 #include <wx/dc.h>
+#include <wx/sizer.h>
 
 #ifndef BracketManager_h
 #define BracketManager_h
 class BracketManager{
     public:
+        BracketManager();
         virtual ~BracketManager() = 0;
-        virtual void drawBracket(wxDC& dc, int width, int height) = 0;
+        virtual void drawBracket(wxDC& dc) = 0;
         virtual void processClick(int x, int y) = 0;
         virtual void playerWon(Player* p) = 0;
+        void setSpacer(wxSizerItem*);
+        void zoomIn();
+        void zoomOut();
+
+    protected:
+        wxSizerItem* spacer;
+        int canvasWidth;
+        int canvasHeight;
+        const static int zoomIncrease = 100;
 };
 #endif

@@ -19,5 +19,26 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 #include <BracketManager.h>
 
+BracketManager::BracketManager(){}
+
 BracketManager::~BracketManager(){
+
+}
+
+void BracketManager::setSpacer(wxSizerItem* canvasSpacer){
+    spacer = canvasSpacer;
+    canvasWidth = spacer->GetSpacer().GetWidth();
+    canvasHeight = spacer->GetSpacer().GetHeight();
+}
+
+void BracketManager::zoomIn(){
+    canvasWidth += zoomIncrease;
+    canvasHeight += zoomIncrease;
+    spacer->AssignSpacer(canvasWidth, canvasHeight);
+}
+
+void BracketManager::zoomOut(){
+    canvasWidth -= zoomIncrease;
+    canvasHeight -= zoomIncrease;
+    spacer->AssignSpacer(canvasWidth, canvasHeight);
 }

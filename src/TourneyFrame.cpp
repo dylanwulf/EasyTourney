@@ -24,15 +24,15 @@ TourneyFrame::TourneyFrame(const wxString& title, const wxSize& size): wxFrame(N
     creation->Show(true);
     this->SetBackgroundColour(*wxWHITE);
     hbox = new wxBoxSizer(wxHORIZONTAL);
+
     ctrlPanel = new wxScrolledWindow(this, ID_ctrlPanel, wxDefaultPosition, wxDefaultSize, wxBORDER_SIMPLE);
     hbox->Add(ctrlPanel, 1, wxEXPAND | wxRIGHT, 0);
     ctrlPanel->SetScrollRate(5, 10);
+
     bracketPanel = new wxScrolledCanvas(this, ID_bracketPanel, wxDefaultPosition, wxDefaultSize, wxBORDER_SIMPLE);
     bracketPanel->SetBackgroundColour(*wxWHITE);
     bracketPanel->SetScrollRate(10, 10);
     wxBoxSizer* bracketSizer = new wxBoxSizer(wxHORIZONTAL);
-    wxSizerItem* bracketSpacer = bracketSizer->Add(1000, 1000, 1);
-    //bracketSpacer->AssignSpacer(wxSize(2000, 2000)); <-- how to change size of bracketPanel
     bracketPanel->SetSizer(bracketSizer);
     hbox->Add(bracketPanel, 3, wxEXPAND | wxLEFT, 0);
     this->SetSizer(hbox);
@@ -49,6 +49,8 @@ TourneyFrame::~TourneyFrame(){
 
 void TourneyFrame::OnCreationFinish(wxCommandEvent& event){
     manager = creation->getBracketManager();
+    wxSizerItem* bracketSpacer = bracketPanel->GetSizer()->Add(800, 800, 1);
+    manager->setSpacer(bracketSpacer);
     creation->Destroy();
     this->Show(true);
 }
@@ -61,6 +63,6 @@ void TourneyFrame::OnCreationCancel(wxCommandEvent& event){
 void TourneyFrame::OnBracketPanelPaint(wxPaintEvent& event){
     wxPaintDC dc(bracketPanel);
     bracketPanel->DoPrepareDC(dc);
-    manager->drawBracket(dc, 1000, 1000);
+    manager->drawBracket(dc);
 }
 

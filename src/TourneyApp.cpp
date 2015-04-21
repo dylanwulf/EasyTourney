@@ -21,7 +21,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 wxIMPLEMENT_APP(TourneyApp);
 
 bool TourneyApp::OnInit(){
-    tFrame = new TourneyFrame("EasyTourney", wxSize(500, 500));
+    tFrame = new TourneyFrame("EasyTourney", wxSize(1070, 650));
     return true;
 }
 

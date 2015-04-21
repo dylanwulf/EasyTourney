@@ -20,12 +20,14 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include <SingleEliminationManager.h>
 #include <cmath>
 
-SingleEliminationManager::SingleEliminationManager(Player* playerList[], unsigned int numPlayers, bool randomize){
+SingleEliminationManager::SingleEliminationManager(Player* playerList[], unsigned int numPlayers, bool randomize): BracketManager() {
     playerTree = new BracketTree(playerList, numPlayers);
 
 }
 
-void SingleEliminationManager::drawBracket(wxDC& dc, int width, int height){
+void SingleEliminationManager::drawBracket(wxDC& dc){
+    int width = canvasWidth;
+    int height = canvasHeight;
     int numLevels = playerTree->getNumLevels();
     int numPlayers = pow(2, numLevels - 1);
     int currPlayers = numPlayers;
@@ -65,3 +67,4 @@ void SingleEliminationManager::processClick(int x, int y){
 void SingleEliminationManager::playerWon(Player* p){
 
 }
+
