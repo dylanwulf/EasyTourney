@@ -37,7 +37,7 @@ CreationFrame::CreationFrame(wxWindow* parent, const wxString& title, const wxSi
 
     wxBoxSizer* listSizer = new wxBoxSizer(wxHORIZONTAL);
     listSizer->AddStretchSpacer(1);
-    playersList = new wxListBox(scrolledArea, wxID_ANY);
+    playersList = new wxListBox(scrolledArea, wxID_ANY, wxDefaultPosition, wxDefaultSize, 0, NULL, wxLB_ALWAYS_SB);
     playersList->SetMinSize(wxSize(-1, 200));
     listSizer->Add(playersList, 3, wxALL | wxALIGN_CENTER | wxEXPAND, 10);
     listSizer->AddStretchSpacer(1);
@@ -81,6 +81,10 @@ CreationFrame::CreationFrame(wxWindow* parent, const wxString& title, const wxSi
     Bind(wxEVT_BUTTON, &CreationFrame::OnFinish, this, ID_finishButton);
     Bind(wxEVT_CLOSE_WINDOW, &CreationFrame::OnClose, this, wxID_ANY);
     closeParentWithMe = true;
+}
+
+CreationFrame::~CreationFrame(){
+    DestroyChildren();
 }
 
 BracketManager* CreationFrame::getBracketManager(){

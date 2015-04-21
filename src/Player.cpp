@@ -25,6 +25,10 @@ Player::Player(std::string playerName, std::string playerDescription){
 
 }
 
+Player::~Player(){
+
+}
+
 std::string Player::getName(){
     return name;
 }

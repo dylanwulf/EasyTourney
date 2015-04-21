@@ -24,6 +24,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 class Player{
     public:
         Player(std::string playerName, std::string playerDescription);
+        ~Player();
         std::string getName();
         std::string getDescription();
     private:

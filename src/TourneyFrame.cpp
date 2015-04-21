@@ -44,6 +44,7 @@ TourneyFrame::TourneyFrame(const wxString& title, const wxSize& size): wxFrame(N
 
 TourneyFrame::~TourneyFrame(){
     delete manager;
+    DestroyChildren();
 }
 
 void TourneyFrame::OnCreationFinish(wxCommandEvent& event){

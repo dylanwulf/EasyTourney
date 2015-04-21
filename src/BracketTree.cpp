@@ -20,8 +20,12 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include <BracketTree.h>
 #include <cmath>
 
-BracketTree::BracketTree(Player* playersList[], int nPlayers){
+BracketTree::BracketTree(Player* players[], int nPlayers){
     numPlayers = nPlayers;
+    playersList = new Player*[numPlayers];
+    for (int i = 0; i < numPlayers; i++)
+        playersList[i] = players[i];
+
     int log2Smashers = (int) ceil(log2(numPlayers));
     playerTreeSize = (int) pow(2, log2Smashers + 1);
     playerTree = new Player*[playerTreeSize];
@@ -42,6 +46,9 @@ BracketTree::BracketTree(Player* playersList[], int nPlayers){
 
 BracketTree::~BracketTree(){
     delete [] playerTree;
+    for (int i = 0; i < numPlayers; i++)
+        delete playersList[i];
+    delete [] playersList;
 }
 
 Player* BracketTree::getPlayerAt(const unsigned int level, const unsigned int pos){

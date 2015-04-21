@@ -32,6 +32,7 @@ class BracketTree{
         unsigned int getNumPlayers();
     private:
         Player** playerTree;
+        Player** playersList;
         unsigned int playerTreeSize;
         unsigned int nextWinnerPos;
         unsigned int numLevels;

@@ -30,6 +30,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 class CreationFrame: public wxFrame {
     public:
         CreationFrame(wxWindow* parent, const wxString& title, const wxSize& size);
+        ~CreationFrame();
         BracketManager* getBracketManager();
     private:
         wxScrolledWindow* scrolledArea;
