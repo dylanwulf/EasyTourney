@@ -20,38 +20,59 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include <SingleEliminationManager.h>
 #include <cmath>
 
-SingleEliminationManager::SingleEliminationManager(Player* playerList[], unsigned int numPlayers, bool randomize): BracketManager() {
-    playerTree = new BracketTree(playerList, numPlayers);
+SingleEliminationManager::SingleEliminationManager(Player* playerList[], unsigned int numSpots, bool randomize): BracketManager() {
+    playerTree = new BracketTree(playerList, numSpots);
 
 }
 
 void SingleEliminationManager::drawBracket(wxDC& dc){
-    int width = canvasWidth;
-    int height = canvasHeight;
     int numLevels = playerTree->getNumLevels();
-    int numPlayers = pow(2, numLevels - 1);
-    int currPlayers = numPlayers;
+    int numSpots = pow(2, numLevels - 1);
+    int currSpots = numSpots;
     int currLevel = 0;
-    double levelWidth = (double) width / (log2(numPlayers) + 1);
+    double levelWidth = (double) canvasWidth / (log2(numSpots) + 1);
 
-    while (currPlayers >= 1){
+    int numPlayers = playerTree->getNumPlayers();
+    int numSecondRounders = pow(2, numLevels - 2);
+    int numLeftovers = numPlayers - numSecondRounders;
+    int numFirstRounders = numLeftovers * 2;
+
+    //Just draw the very left (bottom) ones first
+    for (int i = 0; i < numFirstRounders; i++){
+        double branchHeight = (double) canvasHeight / currSpots;
+        int x1 = 0;
+        int x2 = levelWidth;
+        int y1 = branchHeight * i + branchHeight / 2;
+        int y2 = y1;
+
+        dc.DrawLine(x1, y1, x2, y2);
+
+        if (i % 2 == 0 && i < currSpots - 1)
+            dc.DrawLine(x2, y1, x2, y1 + branchHeight);
+    }
+
+    currSpots /= 2;
+    currLevel++;
+
+    //Then draw all the rest
+    while (currSpots >= 1){
         
-        double branchHeight = (double) height / currPlayers;
+        double branchHeight = (double) canvasHeight / currSpots;
         int x1 = levelWidth * currLevel;
         int x2 = levelWidth * (currLevel + 1);
 
-        for (int i = 0; i < currPlayers; i++){
+        for (int i = 0; i < currSpots; i++){
             
             int y1 = branchHeight * i + branchHeight / 2;
             int y2 = y1;
 
             dc.DrawLine(x1, y1, x2, y2); //Draw horizontal lines
 
-            if (i % 2 == 0 && i < currPlayers - 1)
+            if (i % 2 == 0 && i < currSpots - 1)
                 dc.DrawLine(x2, y1, x2, y1 + branchHeight);
                 //Draw vertical lines
         }
-        currPlayers /= 2;
+        currSpots /= 2;
         currLevel++;
     }
 }

@@ -63,6 +63,7 @@ void TourneyFrame::OnCreationCancel(wxCommandEvent& event){
 void TourneyFrame::OnBracketPanelPaint(wxPaintEvent& event){
     wxPaintDC dc(bracketPanel);
     bracketPanel->DoPrepareDC(dc);
+    dc.DrawText("Test text!!! :D", 0, 0);
     manager->drawBracket(dc);
 }
 

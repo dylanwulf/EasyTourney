@@ -34,6 +34,12 @@ BracketTree::BracketTree(Player* players[], int nPlayers){
     int numSecondRounders = playerTreeSize / 4;
     int numLeftovers = numPlayers - numSecondRounders;
     int numFirstRounders = numLeftovers * 2;
+
+    //Initialize all spots to NULL
+    for (int i = 0; i < playerTreeSize; i++){
+        playerTree[i] = NULL;
+    }
+    
     for (int i = 0; i < numFirstRounders; i++){
         playerTree[i] = playersList[i];
     }
