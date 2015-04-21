@@ -89,8 +89,11 @@ SingleEliminationManager::~SingleEliminationManager(){
     delete playerTree;
 }
 
-void SingleEliminationManager::processClick(int x, int y){
-
+Player* SingleEliminationManager::processClick(int x, int y){
+    int level = x / ((float) canvasWidth / playerTree->getNumLevels());
+    int numBranches = pow(2, playerTree->getNumLevels() - level - 1);
+    int pos = y / ((float) canvasHeight / numBranches);
+    return playerTree->getPlayerAt(level, pos);
 }
 
 void SingleEliminationManager::playerWon(Player* p){

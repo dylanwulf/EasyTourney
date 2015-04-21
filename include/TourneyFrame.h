@@ -42,6 +42,7 @@ class TourneyFrame: public wxFrame {
         void OnBracketPanelPaint(wxPaintEvent&);
         void OnZoomIn(wxCommandEvent&);
         void OnZoomOut(wxCommandEvent&);
+        void OnClick(wxMouseEvent&);
 };
 
 enum {

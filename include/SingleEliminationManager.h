@@ -27,7 +27,7 @@ class SingleEliminationManager: public BracketManager{
         SingleEliminationManager(Player* playerList[], unsigned int numPlayers, bool randomize);
         virtual ~SingleEliminationManager();
         void drawBracket(wxDC& dc);
-        void processClick(int x, int y);
+        Player* processClick(int x, int y);
         void playerWon(Player* p);
     private:
         BracketTree* playerTree;

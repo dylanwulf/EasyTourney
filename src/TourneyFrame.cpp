@@ -48,11 +48,13 @@ TourneyFrame::TourneyFrame(const wxString& title, const wxSize& size): wxFrame(N
     Bind(wxEVT_BUTTON, &TourneyFrame::OnZoomOut, this, ID_zoomOutButton);
     Bind(wxEVT_BUTTON, &TourneyFrame::OnCreationFinish, this, ID_finishButton);
     Bind(wxEVT_BUTTON, &TourneyFrame::OnCreationCancel, this, ID_cancelButton);
+    bracketPanel->Bind(wxEVT_LEFT_DOWN, &TourneyFrame::OnClick, this, wxID_ANY);
     bracketPanel->Bind(wxEVT_PAINT, &TourneyFrame::OnBracketPanelPaint, this);
 }
 
 TourneyFrame::~TourneyFrame(){
-    delete manager;
+    if (this->IsShown())
+        delete manager;
     DestroyChildren();
 }
 
@@ -73,6 +75,14 @@ void TourneyFrame::OnBracketPanelPaint(wxPaintEvent& event){
     wxPaintDC dc(bracketPanel);
     bracketPanel->DoPrepareDC(dc);
     manager->drawBracket(dc);
+}
+
+void TourneyFrame::OnClick(wxMouseEvent& event){
+    event.Skip(); //Necessary so that the window still gains focus when clicked
+    int x = 0;
+    int y = 0;
+    bracketPanel->CalcUnscrolledPosition(event.GetX(), event.GetY(), &x, &y);
+    Player* p = manager->processClick(x, y);
 }
 
 void TourneyFrame::OnZoomIn(wxCommandEvent& event){

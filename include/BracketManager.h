@@ -28,7 +28,7 @@ class BracketManager{
         BracketManager();
         virtual ~BracketManager() = 0;
         virtual void drawBracket(wxDC& dc) = 0;
-        virtual void processClick(int x, int y) = 0;
+        virtual Player* processClick(int x, int y) = 0;
         virtual void playerWon(Player* p) = 0;
         void setSpacer(wxSizerItem*);
         void zoomIn();
