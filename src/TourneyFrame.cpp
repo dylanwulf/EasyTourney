@@ -83,6 +83,8 @@ void TourneyFrame::OnClick(wxMouseEvent& event){
     int y = 0;
     bracketPanel->CalcUnscrolledPosition(event.GetX(), event.GetY(), &x, &y);
     Player* p = manager->processClick(x, y);
+    if (p != NULL)
+        std::cout << p->getName() << std::endl;
 }
 
 void TourneyFrame::OnZoomIn(wxCommandEvent& event){

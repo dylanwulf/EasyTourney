@@ -19,8 +19,13 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 #include <SingleEliminationManager.h>
 #include <cmath>
+#include <cstdlib>
+//the rand() function is in cstdlib
 
 SingleEliminationManager::SingleEliminationManager(Player* playerList[], unsigned int numSpots, bool randomize): BracketManager() {
+    if (randomize){
+        randomizePlayers(playerList, numSpots);
+    }
     playerTree = new BracketTree(playerList, numSpots);
 
 }
@@ -98,5 +103,15 @@ Player* SingleEliminationManager::processClick(int x, int y){
 
 void SingleEliminationManager::playerWon(Player* p){
 
+}
+
+void SingleEliminationManager::randomizePlayers(Player* p[], int n){
+    for (int i = 0; i < n; i++){
+        double random = rand()/static_cast<double>(RAND_MAX-1);
+        int r = i + static_cast<int>(random * (n - i));
+        Player* temp = p[i];
+        p[i] = p[r];
+        p[r] = temp;
+    }
 }
 
