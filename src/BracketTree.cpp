@@ -59,6 +59,8 @@ BracketTree::~BracketTree(){
 
 Player* BracketTree::getPlayerAt(const unsigned int level, const unsigned int pos){
     unsigned int treePos = playerTreeSize - playerTreeSize / pow(2, level) + pos;
+    if (treePos >= playerTreeSize || treePos < 0)
+        return NULL;
     return playerTree[treePos];
 }
 
