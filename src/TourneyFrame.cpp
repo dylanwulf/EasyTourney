@@ -37,6 +37,15 @@ TourneyFrame::TourneyFrame(const wxString& title, const wxSize& size): wxFrame(N
     hbox->Add(bracketPanel, 3, wxEXPAND | wxLEFT, 0);
     this->SetSizer(hbox);
 
+    wxBoxSizer* ctrlSizer = new wxBoxSizer(wxVERTICAL);
+    wxButton* zoomInButton = new wxButton(ctrlPanel, ID_zoomInButton, "Zoom In");
+    ctrlSizer->Add(zoomInButton, 0);
+    wxButton* zoomOutButton = new wxButton(ctrlPanel, ID_zoomOutButton, "Zoom Out");
+    ctrlSizer->Add(zoomOutButton, 0);
+    ctrlPanel->SetSizer(ctrlSizer);
+
+    Bind(wxEVT_BUTTON, &TourneyFrame::OnZoomIn, this, ID_zoomInButton);
+    Bind(wxEVT_BUTTON, &TourneyFrame::OnZoomOut, this, ID_zoomOutButton);
     Bind(wxEVT_BUTTON, &TourneyFrame::OnCreationFinish, this, ID_finishButton);
     Bind(wxEVT_BUTTON, &TourneyFrame::OnCreationCancel, this, ID_cancelButton);
     bracketPanel->Bind(wxEVT_PAINT, &TourneyFrame::OnBracketPanelPaint, this);
@@ -67,3 +76,14 @@ void TourneyFrame::OnBracketPanelPaint(wxPaintEvent& event){
     manager->drawBracket(dc);
 }
 
+void TourneyFrame::OnZoomIn(wxCommandEvent& event){
+    manager->zoomIn();
+    hbox->Layout();
+    bracketPanel->Refresh();
+}
+
+void TourneyFrame::OnZoomOut(wxCommandEvent& event){
+    manager->zoomOut();
+    hbox->Layout();
+    bracketPanel->Refresh();
+}

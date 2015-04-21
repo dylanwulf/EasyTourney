@@ -40,11 +40,15 @@ class TourneyFrame: public wxFrame {
         void OnCreationFinish(wxCommandEvent&);
         void OnCreationCancel(wxCommandEvent&);
         void OnBracketPanelPaint(wxPaintEvent&);
+        void OnZoomIn(wxCommandEvent&);
+        void OnZoomOut(wxCommandEvent&);
 };
 
 enum {
     ID_ctrlPanel = ID_cancelButton + 1, 
-    ID_bracketPanel
+    ID_bracketPanel,
+    ID_zoomInButton,
+    ID_zoomOutButton
 };
 
 #endif
