@@ -46,6 +46,10 @@ void SingleEliminationManager::drawBracket(wxDC& dc){
         int y2 = y1;
 
         dc.DrawLine(x1, y1, x2, y2);
+        if (playerTree->getPlayerAt(currLevel, i) != NULL){
+            Player* p = playerTree->getPlayerAt(currLevel, i);
+            dc.DrawText(p->getName(), x1 + 20, y1 - 16);
+        }
 
         if (i % 2 == 0 && i < currSpots - 1)
             dc.DrawLine(x2, y1, x2, y1 + branchHeight);
@@ -67,6 +71,10 @@ void SingleEliminationManager::drawBracket(wxDC& dc){
             int y2 = y1;
 
             dc.DrawLine(x1, y1, x2, y2); //Draw horizontal lines
+            if (playerTree->getPlayerAt(currLevel, i) != NULL){
+                Player* p = playerTree->getPlayerAt(currLevel, i);
+                dc.DrawText(p->getName(), x1 + 20, y1 - 16);
+            }
 
             if (i % 2 == 0 && i < currSpots - 1)
                 dc.DrawLine(x2, y1, x2, y1 + branchHeight);
