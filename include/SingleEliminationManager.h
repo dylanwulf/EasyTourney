@@ -24,12 +24,28 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #define SingleEliminationManager_h
 class SingleEliminationManager: public BracketManager{
     public:
+    
+        //Constructor takes arguments:
+        //playerList: list of all players entered
+        //numPlayers: how many players entered
+        //randomize: whether to shuffle the array
         SingleEliminationManager(Player* playerList[], unsigned int numPlayers, bool randomize);
-        virtual ~SingleEliminationManager();
+        
+        //Destructor
+        ~SingleEliminationManager();
+        
+        //Draw bracket and names on screen
         void drawBracket(wxDC& dc);
+        
+        //Get the player located here, if any
         Player* processClick(int x, int y);
+        
+        //Advance player up the bracket
         void playerWon(Player* p);
+        
+        //Shuffle the order of the players
         void randomizePlayers(Player*[], int);
+        
     private:
         BracketTree* playerTree;
 };

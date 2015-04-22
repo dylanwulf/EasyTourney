@@ -20,12 +20,19 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include <BracketTree.h>
 #include <cmath>
 
+//Constructor which takes two arguments:
+//playersList: array of Player pointers
+//numPlayers: how many Players* in the list
 BracketTree::BracketTree(Player* players[], int nPlayers){
     numPlayers = nPlayers;
+    
+    //Copy all the Players into a local array so that they can be 
+    //properly deleted
     playersList = new Player*[numPlayers];
     for (int i = 0; i < numPlayers; i++)
         playersList[i] = players[i];
 
+    //Calculate positions to place things in the array
     int log2Smashers = (int) ceil(log2(numPlayers));
     playerTreeSize = (int) pow(2, log2Smashers + 1);
     playerTree = new Player*[playerTreeSize];
@@ -50,6 +57,7 @@ BracketTree::BracketTree(Player* players[], int nPlayers){
 
 }
 
+//Destructor
 BracketTree::~BracketTree(){
     delete [] playerTree;
     for (int i = 0; i < numPlayers; i++)
@@ -57,11 +65,23 @@ BracketTree::~BracketTree(){
     delete [] playersList;
 }
 
-Player* BracketTree::getPlayerAt(const unsigned int level, const unsigned int pos){
+//Returns a pointer to the Player object at the specified position
+//in the bracket
+Player* BracketTree::getPlayerAt(unsigned int level, unsigned int pos){
     unsigned int treePos = playerTreeSize - playerTreeSize / pow(2, level) + pos;
     if (treePos >= playerTreeSize || treePos < 0)
         return NULL;
     return playerTree[treePos];
+}
+
+//Not yet implemented
+void BracketTree::playerWon(Player* p){
+
+}
+
+//Not yet implemented
+void BracketTree::playerWon(unsigned int level, unsigned int pos){
+
 }
 
 unsigned int BracketTree::getNumLevels(){

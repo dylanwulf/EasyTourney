@@ -25,18 +25,21 @@ BracketManager::~BracketManager(){
 
 }
 
+//The spacer is necessary to zoom and draw correctly.
 void BracketManager::setSpacer(wxSizerItem* canvasSpacer){
     spacer = canvasSpacer;
     canvasWidth = spacer->GetSpacer().GetWidth();
     canvasHeight = spacer->GetSpacer().GetHeight();
 }
 
+//Increase size of canvas where bracket is drawn by zoomIncrease
 void BracketManager::zoomIn(){
     canvasWidth += zoomIncrease;
     canvasHeight += zoomIncrease;
     spacer->AssignSpacer(canvasWidth, canvasHeight);
 }
 
+//Decrease size of canvas by zoomIncrease
 void BracketManager::zoomOut(){
     canvasWidth -= zoomIncrease;
     canvasHeight -= zoomIncrease;

@@ -18,12 +18,15 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 ****************************************************************/
 #include <TourneyApp.h>
 
-wxIMPLEMENT_APP(TourneyApp);
+wxIMPLEMENT_APP(TourneyApp); //The main method is in here
 
+//Initialize the application
 bool TourneyApp::OnInit(){
     tFrame = new TourneyFrame("EasyTourney", wxSize(1070, 650));
     return true;
 }
 
+//Clean up
 int TourneyApp::OnExit(){
+    return 0;
 }

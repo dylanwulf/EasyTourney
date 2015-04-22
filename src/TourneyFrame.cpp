@@ -19,6 +19,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 #include <TourneyFrame.h>
 
+//Constructor
 TourneyFrame::TourneyFrame(const wxString& title, const wxSize& size): wxFrame(NULL, wxID_ANY, title, wxDefaultPosition, size) {
     creation = new CreationFrame(this, "Create a New Tournament", wxSize(300, 600));
     creation->Show(true);
@@ -52,6 +53,7 @@ TourneyFrame::TourneyFrame(const wxString& title, const wxSize& size): wxFrame(N
     bracketPanel->Bind(wxEVT_PAINT, &TourneyFrame::OnBracketPanelPaint, this);
 }
 
+//Destructor
 TourneyFrame::~TourneyFrame(){
     if (this->IsShown())
         delete manager;
@@ -89,12 +91,18 @@ void TourneyFrame::OnClick(wxMouseEvent& event){
 
 void TourneyFrame::OnZoomIn(wxCommandEvent& event){
     manager->zoomIn();
+    
+    //force window to update so it shows newly zoomed
+    //bracket and adjusted scrollbars
     hbox->Layout();
     bracketPanel->Refresh();
 }
 
 void TourneyFrame::OnZoomOut(wxCommandEvent& event){
     manager->zoomOut();
+    
+    //force window to update so it shows newly zoomed
+    //bracket and adjusted scrollbars
     hbox->Layout();
     bracketPanel->Refresh();
 }

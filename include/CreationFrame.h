@@ -31,7 +31,11 @@ class CreationFrame: public wxFrame {
     public:
         CreationFrame(wxWindow* parent, const wxString& title, const wxSize& size);
         ~CreationFrame();
+        
+        //Create and retern a BracketManager object pointer, which will
+        //hold all the logic behind the bracket behavior
         BracketManager* getBracketManager();
+        
     private:
         wxScrolledWindow* scrolledArea;
         wxBoxSizer* vbox;
@@ -47,6 +51,8 @@ class CreationFrame: public wxFrame {
         wxButton* finishButton;
         bool closeParentWithMe;
         wxButton* cancelButton;
+        
+        //Event Handlers
         void OnAdd(wxCommandEvent&);
         void OnEdit(wxCommandEvent&);
         void OnRemove(wxCommandEvent&);

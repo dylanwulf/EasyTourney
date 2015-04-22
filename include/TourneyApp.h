@@ -31,8 +31,13 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 class TourneyApp: public wxApp {
     public:
+        
+        //Initialize the application
         virtual bool OnInit();
+        
+        //Clean up
         virtual int OnExit();
+        
     private:
         TourneyFrame* tFrame;
 

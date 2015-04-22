@@ -29,7 +29,11 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 class TourneyFrame: public wxFrame {
     public:
+        
+        //Constructor
         TourneyFrame(const wxString& title, const wxSize& size);
+        
+        //Destructor
         ~TourneyFrame();
     private:
         CreationFrame* creation;
@@ -37,6 +41,8 @@ class TourneyFrame: public wxFrame {
         wxScrolledWindow* ctrlPanel;
         wxScrolledCanvas* bracketPanel;
         BracketManager* manager;
+        
+        //Event handlers
         void OnCreationFinish(wxCommandEvent&);
         void OnCreationCancel(wxCommandEvent&);
         void OnBracketPanelPaint(wxPaintEvent&);

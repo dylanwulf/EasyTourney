@@ -23,13 +23,28 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #define BracketTree_h
 class BracketTree{
     public:
+        //Constructor which takes two arguments:
+        //playersList: array of Player pointers
+        //numPlayers: how many Players* in the list
         BracketTree(Player* playersList[], int numPlayers);
+        
+        //Destructor
         ~BracketTree();
-        Player* getPlayerAt(const unsigned int level, const unsigned int pos);
-        void playerWon(Player p);
-        void playerWon(const unsigned int level, const unsigned int pos);
+        
+        //Returns a pointer to the Player object at the specified position
+        //in the bracket
+        Player* getPlayerAt(unsigned int level, unsigned int pos);
+        
+        //Advance the Player up the bracket
+        void playerWon(Player* p);
+        
+        //same as calling playerWon(getPlayerAt(level, pos))
+        void playerWon(unsigned int level, unsigned int pos);
+        
         unsigned int getNumLevels();
+        
         unsigned int getNumPlayers();
+        
     private:
         Player** playerTree;
         Player** playersList;

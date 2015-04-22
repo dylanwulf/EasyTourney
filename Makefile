@@ -1,8 +1,10 @@
+WX_BUILD = /home/dylan/Downloads/wxWidgets-3.0.2/buildgtk2
+WX_CONFIG = $(WX_BUILD)/lib/wx/config/inplace*
 BD = build
 ID = include
 SRC = src
-INC = `wx-config --cppflags` -I./$(ID)
-LIBS = `wx-config --static --libs`
+INC = `$(WX_CONFIG) --cppflags` -I./$(ID)
+LIBS = `$(WX_CONFIG) --static --libs`
 OBJS = $(BD)/TourneyApp.o $(BD)/TourneyFrame.o $(BD)/CreationFrame.o $(BD)/Player.o $(BD)/BracketTree.o $(BD)/SingleEliminationManager.o $(BD)/BracketManager.o
 
 $(BD)/EasyTourney: $(OBJS)

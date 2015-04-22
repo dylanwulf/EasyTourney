@@ -22,6 +22,10 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include <cstdlib>
 //the rand() function is in cstdlib
 
+//Constructor takes arguments:
+//playerList: list of all players entered
+//numPlayers: how many players entered
+//randomize: whether to shuffle the array
 SingleEliminationManager::SingleEliminationManager(Player* playerList[], unsigned int numSpots, bool randomize): BracketManager() {
     if (randomize){
         randomizePlayers(playerList, numSpots);
@@ -30,6 +34,12 @@ SingleEliminationManager::SingleEliminationManager(Player* playerList[], unsigne
 
 }
 
+//Destructor
+SingleEliminationManager::~SingleEliminationManager(){
+    delete playerTree;
+}
+
+//Draw bracket and names on screen
 void SingleEliminationManager::drawBracket(wxDC& dc){
     int numLevels = playerTree->getNumLevels();
     int numSpots = pow(2, numLevels - 1);
@@ -50,14 +60,14 @@ void SingleEliminationManager::drawBracket(wxDC& dc){
         int y1 = branchHeight * i + branchHeight / 2;
         int y2 = y1;
 
-        dc.DrawLine(x1, y1, x2, y2);
+        dc.DrawLine(x1, y1, x2, y2); //horizontal lines
         if (playerTree->getPlayerAt(currLevel, i) != NULL){
             Player* p = playerTree->getPlayerAt(currLevel, i);
             dc.DrawText(p->getName(), x1 + 20, y1 - 16);
         }
 
         if (i % 2 == 0 && i < currSpots - 1)
-            dc.DrawLine(x2, y1, x2, y1 + branchHeight);
+            dc.DrawLine(x2, y1, x2, y1 + branchHeight); //vertical lines
     }
 
     currSpots /= 2;
@@ -90,10 +100,7 @@ void SingleEliminationManager::drawBracket(wxDC& dc){
     }
 }
 
-SingleEliminationManager::~SingleEliminationManager(){
-    delete playerTree;
-}
-
+//Get the player located here, if any
 Player* SingleEliminationManager::processClick(int x, int y){
     int level = x / ((float) canvasWidth / playerTree->getNumLevels());
     int numBranches = pow(2, playerTree->getNumLevels() - level - 1);
@@ -101,10 +108,12 @@ Player* SingleEliminationManager::processClick(int x, int y){
     return playerTree->getPlayerAt(level, pos);
 }
 
+//Advance player up the bracket, not yet implemented
 void SingleEliminationManager::playerWon(Player* p){
 
 }
 
+//Shuffle the order of the players
 void SingleEliminationManager::randomizePlayers(Player* p[], int n){
     for (int i = 0; i < n; i++){
         double random = rand()/static_cast<double>(RAND_MAX-1);
