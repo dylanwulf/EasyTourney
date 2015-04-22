@@ -47,7 +47,7 @@ A simple, easy to use tournament bracket manager.
   ```
 
 **OSX Installation: Building from Source**  
-I have not yet built this application on OSX but it should be very similar to the Linux method.
+I have not yet built this application on OSX but it should be very similar to the Linux method, except in step #4 leave out the --with-gtk=2 option.
 
 **Windows Installation: Building from Source**  
 Coming soon!
