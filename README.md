@@ -20,7 +20,7 @@ A simple, easy to use tournament bracket manager.
   $ mkdir build-gtk
   ```
   
-4. Cd into the new build directory and call the configure script:
+4. Cd into the new build directory and call the configure script, replacing gtk=2 with your windowing system (gtk, x11, osx-cocoa, etc)
   ```
   $ cd build-gtk
   $ ../configure --with-gtk=2 --disable-shared
@@ -46,8 +46,15 @@ A simple, easy to use tournament bracket manager.
   $ make
   ```
 
+**Linux Installation: Precompiled Binary**  
+A precompiled binary executable is available here: http://www.tcnj.edu/~wulfd1/EasyTourney/EasyTourney  
+This binary should work on most Linux systems using gtk2 or gtk3. Just run the following command on the file and it will be ready to go.
+```
+$ chmod +x EasyTourney
+```
+
 **OSX Installation: Building from Source**  
-I have not yet built this application on OSX but it should be very similar to the Linux method, except in step #4 leave out the --with-gtk=2 option.
+I have not yet built this application on OSX but it should be very similar to the Linux method.
 
 **Windows Installation: Building from Source**  
 Coming soon!
