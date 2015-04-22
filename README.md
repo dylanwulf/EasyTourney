@@ -5,7 +5,7 @@ A simple, easy to use tournament bracket manager.
 
 **Linux Installation: Building from Source**  
   
-1. First, install the development files for GTK+2:
+1. First, install the development files for GTK+2 (or whatever your windowing system is):
   ```  
   $ sudo apt-get install libgtk2.0-dev  
   OR  
