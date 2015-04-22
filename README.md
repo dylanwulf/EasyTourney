@@ -45,3 +45,9 @@ A simple, easy to use tournament bracket manager.
   ```
   $ make
   ```
+
+**OSX Installation: Building from Source**  
+I have not yet built this application on OSX but it should be very similar to the Linux method.
+
+**Windows Installation: Building from Source**  
+Coming soon!
