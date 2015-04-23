@@ -1,5 +1,5 @@
 WX_BUILD = /home/dylan/Downloads/wxWidgets-3.0.2/buildgtk2
-WX_CONFIG = $(WX_BUILD)/lib/wx/config/inplace*
+WX_CONFIG = $(WX_BUILD)/wx-config
 BD = build
 ID = include
 SRC = src
