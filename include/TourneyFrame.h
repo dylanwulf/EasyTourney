@@ -39,6 +39,8 @@ class TourneyFrame: public wxFrame {
         CreationFrame* creation;
         wxBoxSizer* hbox;
         wxScrolledWindow* ctrlPanel;
+        wxTextCtrl* nameBox;
+        wxTextCtrl* descBox;
         wxScrolledCanvas* bracketPanel;
         BracketManager* manager;
         

@@ -39,6 +39,12 @@ TourneyFrame::TourneyFrame(const wxString& title, const wxSize& size): wxFrame(N
     this->SetSizer(hbox);
 
     wxBoxSizer* ctrlSizer = new wxBoxSizer(wxVERTICAL);
+    nameBox = new wxTextCtrl(ctrlPanel, wxID_ANY, "--Select Player--", wxDefaultPosition, wxDefaultSize, wxTE_READONLY | wxTE_CENTRE);
+    ctrlSizer->Add(nameBox, 0, wxEXPAND | wxALL, 10);
+
+    descBox = new wxTextCtrl(ctrlPanel, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(-1, 120), wxTE_MULTILINE | wxTE_READONLY);
+    ctrlSizer->Add(descBox, 0, wxEXPAND | wxALL, 10);
+
     wxButton* zoomInButton = new wxButton(ctrlPanel, ID_zoomInButton, "Zoom In");
     ctrlSizer->Add(zoomInButton, 0);
     wxButton* zoomOutButton = new wxButton(ctrlPanel, ID_zoomOutButton, "Zoom Out");
@@ -85,8 +91,14 @@ void TourneyFrame::OnClick(wxMouseEvent& event){
     int y = 0;
     bracketPanel->CalcUnscrolledPosition(event.GetX(), event.GetY(), &x, &y);
     Player* p = manager->processClick(x, y);
-    if (p != NULL)
-        std::cout << p->getName() << std::endl;
+    if (p == NULL){
+        nameBox->SetValue("--Select Player--");
+        descBox->SetValue(wxEmptyString);
+    }
+    else{
+        nameBox->SetValue(p->getName());
+        descBox->SetValue(p->getDescription());
+    }
 }
 
 void TourneyFrame::OnZoomIn(wxCommandEvent& event){
