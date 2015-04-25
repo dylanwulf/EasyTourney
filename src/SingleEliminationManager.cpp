@@ -67,7 +67,7 @@ void SingleEliminationManager::drawBracket(wxDC& dc){
         }
 
         if (i % 2 == 0 && i < currSpots - 1)
-            dc.DrawLine(x2, y1, x2, y1 + branchHeight); //vertical lines
+            dc.DrawLine(x2, y1, x2, y1 + branchHeight + 1); //vertical lines
     }
 
     currSpots /= 2;
@@ -92,7 +92,7 @@ void SingleEliminationManager::drawBracket(wxDC& dc){
             }
 
             if (i % 2 == 0 && i < currSpots - 1)
-                dc.DrawLine(x2, y1, x2, y1 + branchHeight);
+                dc.DrawLine(x2, y1, x2, y1 + branchHeight + 1);
                 //Draw vertical lines
         }
         currSpots /= 2;
