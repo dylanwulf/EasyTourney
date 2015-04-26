@@ -143,7 +143,7 @@ void TourneyFrame::OnBracketMouseUp(wxMouseEvent& event){
 //Event handler for mouse motion events. If the event is a dragging event,
 //scroll the bracket panel accordingly.
 void TourneyFrame::OnBracketMouseMove(wxMouseEvent& event){
-    if (event.Dragging()){
+    if (event.Dragging() && event.LeftIsDown()){
         int mouseX = event.GetX();
         int mouseY = event.GetY();
         int currentViewX = 0;
