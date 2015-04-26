@@ -42,6 +42,13 @@ class TourneyFrame: public wxFrame {
         wxTextCtrl* nameBox;
         wxTextCtrl* descBox;
         wxScrolledCanvas* bracketPanel;
+        int bracketCanvasWidth;
+        int bracketCanvasHeight;
+        int mousePrevX;
+        int mousePrevY;
+        int scrollRateX;
+        int scrollRateY;
+        wxSizerItem* bracketSpacer;
         BracketManager* manager;
         
         //Event handlers
@@ -50,7 +57,9 @@ class TourneyFrame: public wxFrame {
         void OnBracketPanelPaint(wxPaintEvent&);
         void OnZoomIn(wxCommandEvent&);
         void OnZoomOut(wxCommandEvent&);
-        void OnClick(wxMouseEvent&);
+        void OnBracketClick(wxMouseEvent&);
+        void OnBracketMouseUp(wxMouseEvent&);
+        void OnBracketMouseMove(wxMouseEvent&);
 };
 
 enum {

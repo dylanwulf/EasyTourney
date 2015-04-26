@@ -29,27 +29,13 @@ class BracketManager{
         virtual ~BracketManager() = 0;
         
         //Draws the shape of the bracket and names of players on the screen
-        virtual void drawBracket(wxDC& dc) = 0;
+        virtual void drawBracket(wxDC& dc, int canvasWidth, int canvasHeight) = 0;
         
         //Determines which player was clicked on, if any, according to given coordinates
-        virtual Player* processClick(int x, int y) = 0;
+        virtual Player* getClickedPlayer(int x, int y, int canvasWidth, int canvasHeight) = 0;
         
         //Advances a player up the bracket
         virtual void playerWon(Player* p) = 0;
         
-        //The spacer is necessary to zoom and draw correctly.
-        void setSpacer(wxSizerItem*);
-        
-        //Increase size of canvas where bracket is drawn by zoomIncrease
-        void zoomIn();
-        
-        //Decrease size of canvas by zoomIncrease
-        void zoomOut();
-
-    protected:
-        wxSizerItem* spacer;
-        int canvasWidth;
-        int canvasHeight;
-        const static int zoomIncrease = 100;
 };
 #endif

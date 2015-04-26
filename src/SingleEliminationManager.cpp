@@ -40,7 +40,7 @@ SingleEliminationManager::~SingleEliminationManager(){
 }
 
 //Draw bracket and names on screen
-void SingleEliminationManager::drawBracket(wxDC& dc){
+void SingleEliminationManager::drawBracket(wxDC& dc, int canvasWidth, int canvasHeight){
     int numLevels = playerTree->getNumLevels();
     int numSpots = pow(2, numLevels - 1);
     int currSpots = numSpots;
@@ -101,7 +101,7 @@ void SingleEliminationManager::drawBracket(wxDC& dc){
 }
 
 //Get the player located here, if any
-Player* SingleEliminationManager::processClick(int x, int y){
+Player* SingleEliminationManager::getClickedPlayer(int x, int y, int canvasWidth, int canvasHeight){
     int level = x / ((float) canvasWidth / playerTree->getNumLevels());
     int numBranches = pow(2, playerTree->getNumLevels() - level - 1);
     int pos = y / ((float) canvasHeight / numBranches);

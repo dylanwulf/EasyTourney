@@ -35,10 +35,10 @@ class SingleEliminationManager: public BracketManager{
         ~SingleEliminationManager();
         
         //Draw bracket and names on screen
-        void drawBracket(wxDC& dc);
+        void drawBracket(wxDC& dc, int canvasWidth, int canvasHeight);
         
         //Get the player located here, if any
-        Player* processClick(int x, int y);
+        Player* getClickedPlayer(int x, int y, int canvasWidth, int canvasHeight);
         
         //Advance player up the bracket
         void playerWon(Player* p);
