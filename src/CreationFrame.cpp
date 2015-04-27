@@ -118,11 +118,15 @@ void CreationFrame::OnAdd(wxCommandEvent& event){
     if (nameInput->GetValue() != ""){
         Player* player = new Player(nameInput->GetValue().ToStdString(), descriptionInput->GetValue().ToStdString());
         playersList->Append(player->getName(), player);
+        nameInput->Clear();
+        descriptionInput->Clear();
+        nameInput->SetFocus();
+        vbox->Layout();
+    } 
+    else{
+        wxMessageDialog* addError = new wxMessageDialog(this, "Please type a name.", "Alert", wxOK);
+        addError->ShowModal();
     }
-    nameInput->Clear();
-    descriptionInput->Clear();
-    nameInput->SetFocus();
-    vbox->Layout();
 }
 
 void CreationFrame::OnEdit(wxCommandEvent& event){
