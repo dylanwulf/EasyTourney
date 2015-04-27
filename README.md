@@ -31,9 +31,10 @@ A simple, easy to use tournament bracket manager.
   $ make
   ```
   
-6. Download the EasyTourney source code and cd into its base directory: 
+6. Download the EasyTourney source code, cd into its base directory, and make a build directory: 
   ```
   cd EasyTourney/
+  mkdir build/
   ```
 
 7. Open the Makefile with a text editor and modify the first line so it has the **full** path to the wxWidgets build directory that you created in step 3. It will look something like: 
