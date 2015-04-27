@@ -129,6 +129,13 @@ void TourneyFrame::OnBracketClick(wxMouseEvent& event){
     bracketPanel->SetScrollbars(1, 1, bracketCanvasWidth, bracketCanvasHeight, 
                                 bracketPanel->GetViewStart().x * scrollRateX, 
                                 bracketPanel->GetViewStart().y * scrollRateY);
+                                
+    //The page/canvas itself scrolls fine without these, but the scrollbars
+    //temporarily show the wrong location until the page moves.
+    //So I scroll it forward by one and then backward by one to get the scrollbars
+    //to show the correct location
+    bracketPanel->Scroll(bracketPanel->GetViewStart().x + 1, bracketPanel->GetViewStart().y + 1);
+    bracketPanel->Scroll(bracketPanel->GetViewStart().x - 1, bracketPanel->GetViewStart().y - 1);
 }
 
 //Once drag scrolling is finished, set scrollbars back to what they were before

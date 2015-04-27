@@ -103,8 +103,10 @@ void SingleEliminationManager::drawBracket(wxDC& dc, int canvasWidth, int canvas
 //Get the player located here, if any
 Player* SingleEliminationManager::getClickedPlayer(int x, int y, int canvasWidth, int canvasHeight){
     int level = x / ((float) canvasWidth / playerTree->getNumLevels());
+    selectedLevel = level;
     int numBranches = pow(2, playerTree->getNumLevels() - level - 1);
     int pos = y / ((float) canvasHeight / numBranches);
+    selectedPos = pos;
     return playerTree->getPlayerAt(level, pos);
 }
 

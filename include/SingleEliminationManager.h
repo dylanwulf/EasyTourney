@@ -48,5 +48,7 @@ class SingleEliminationManager: public BracketManager{
         
     private:
         BracketTree* playerTree;
+        unsigned int selectedLevel;
+        unsigned int selectedPos;
 };
 #endif
