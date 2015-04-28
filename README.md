@@ -27,15 +27,15 @@ A simple, easy to use tournament bracket manager.
   $ ../configure --with-gtk=2 --disable-shared
   ```
   
-5. Call make to build the wxWidgets library. Warning: this step takes about 10 minutes and 2GB of space (which you can safely delete after the end of this installation tutorial)
+5. Call make to build the wxWidgets library. Warning: this step takes about 10 minutes and 2GB of hard drive space (which you can safely delete after the end of this installation tutorial)
   ```
   $ make
   ```
   
 6. Download the EasyTourney source code, cd into its base directory, and make a build directory: 
   ```
-  cd EasyTourney/
-  mkdir build/
+  $ cd EasyTourney/
+  $ mkdir build/
   ```
 
 7. Open the Makefile with a text editor and modify the first line so it has the **full** path to the wxWidgets build directory that you created in step 3. It will look something like: 
@@ -78,15 +78,15 @@ $ chmod +x EasyTourney
   $ ../configure --disable-shared --disable-webview --disable-webview-webkit --with-macosx-version-min=10.7
   ```  
   
-5. Call make to build the wxWidgets library. Warning: this step takes about 10 minutes and 2GB of space (which you can safely delete after the end of this installation tutorial)  
+5. Call make to build the wxWidgets library. Warning: this step takes about 10 minutes and 2GB of hard drive space (which you can safely delete after the end of this installation tutorial)  
   ```
   $ make
   ```  
   
 6. Download the EasyTourney source code, cd into its base directory, and make a build directory:  
   ```
-  cd EasyTourney/
-  mkdir build/
+  $ cd EasyTourney/
+  $ mkdir build/
   ```  
   
 7. Open Makefile-OSX with a text editor and modify the first line so it has the **full** path to the wxWidgets build directory that you created in step 3. It will look something like:  
