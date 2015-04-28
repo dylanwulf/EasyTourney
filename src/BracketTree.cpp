@@ -69,19 +69,37 @@ BracketTree::~BracketTree(){
 //in the bracket
 Player* BracketTree::getPlayerAt(unsigned int level, unsigned int pos){
     unsigned int treePos = playerTreeSize - playerTreeSize / pow(2, level) + pos;
-    if (treePos >= playerTreeSize || treePos < 0)
+    if (treePos >= playerTreeSize)
         return NULL;
     return playerTree[treePos];
 }
 
-//Not yet implemented
-void BracketTree::playerWon(Player* p){
+//Checks if the player at the specified location can advance
+bool BracketTree::canPlayerAdvance(unsigned int level, unsigned int pos){
+    Player* p = getPlayerAt(level, pos);
+    if (p == NULL)
+        return false;
 
+    int advanceTreePos = playerTreeSize - playerTreeSize / pow(2, level + 1) + (pos / 2);
+    if (advanceTreePos >= playerTreeSize || playerTree[advanceTreePos] != NULL)
+        return false;
+
+    return true;
 }
 
-//Not yet implemented
-void BracketTree::playerWon(unsigned int level, unsigned int pos){
+//Advance the player at the specified location up the bracket
+//Returns true if successful, false otherwise
+bool BracketTree::playerWon(unsigned int level, unsigned int pos){
+    Player* p = getPlayerAt(level, pos);
+    if (p == NULL)
+        return false;
 
+    int treePos = playerTreeSize - playerTreeSize / pow(2, level + 1) + (pos / 2);
+    if (treePos >= playerTreeSize || playerTree[treePos] != NULL)
+        return false;
+    
+    playerTree[treePos] = p;
+    return true;
 }
 
 unsigned int BracketTree::getNumLevels(){

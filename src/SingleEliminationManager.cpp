@@ -101,7 +101,7 @@ void SingleEliminationManager::drawBracket(wxDC& dc, int canvasWidth, int canvas
 }
 
 //Get the player located here, if any
-Player* SingleEliminationManager::getClickedPlayer(int x, int y, int canvasWidth, int canvasHeight){
+Player* SingleEliminationManager::selectPlayer(int x, int y, int canvasWidth, int canvasHeight){
     int level = x / ((float) canvasWidth / playerTree->getNumLevels());
     selectedLevel = level;
     int numBranches = pow(2, playerTree->getNumLevels() - level - 1);
@@ -110,9 +110,9 @@ Player* SingleEliminationManager::getClickedPlayer(int x, int y, int canvasWidth
     return playerTree->getPlayerAt(level, pos);
 }
 
-//Advance player up the bracket, not yet implemented
-void SingleEliminationManager::playerWon(Player* p){
-
+//Advances the player (selected by selectPlayer()) up the bracket
+bool SingleEliminationManager::selectedPlayerWon(){
+    return playerTree->playerWon(selectedLevel, selectedPos);
 }
 
 //Shuffle the order of the players

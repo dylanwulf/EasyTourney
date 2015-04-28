@@ -31,11 +31,10 @@ class BracketManager{
         //Draws the shape of the bracket and names of players on the screen
         virtual void drawBracket(wxDC& dc, int canvasWidth, int canvasHeight) = 0;
         
-        //Determines which player was clicked on, if any, according to given coordinates
-        virtual Player* getClickedPlayer(int x, int y, int canvasWidth, int canvasHeight) = 0;
+        //Selects a player at the specified location and returns a pointer to it
+        virtual Player* selectPlayer(int x, int y, int canvasWidth, int canvasHeight) = 0;
         
         //Advances a player up the bracket
-        virtual void playerWon(Player* p) = 0;
-        
+        virtual bool selectedPlayerWon() = 0;
 };
 #endif

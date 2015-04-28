@@ -55,9 +55,11 @@ class TourneyFrame: public wxFrame {
         void OnCreationFinish(wxCommandEvent&);
         void OnCreationCancel(wxCommandEvent&);
         void OnBracketPanelPaint(wxPaintEvent&);
+        void OnPlayerWon(wxCommandEvent&);
         void OnZoomIn(wxCommandEvent&);
         void OnZoomOut(wxCommandEvent&);
         void OnBracketClick(wxMouseEvent&);
+        void OnBracketDoubleClick(wxMouseEvent&);
         void OnBracketMouseUp(wxMouseEvent&);
         void OnBracketMouseMove(wxMouseEvent&);
 };
@@ -65,6 +67,7 @@ class TourneyFrame: public wxFrame {
 enum {
     ID_ctrlPanel = ID_cancelButton + 1, 
     ID_bracketPanel,
+    ID_playerWonButton,
     ID_zoomInButton,
     ID_zoomOutButton
 };

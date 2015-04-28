@@ -35,11 +35,12 @@ class BracketTree{
         //in the bracket
         Player* getPlayerAt(unsigned int level, unsigned int pos);
         
-        //Advance the Player up the bracket
-        void playerWon(Player* p);
-        
-        //same as calling playerWon(getPlayerAt(level, pos))
-        void playerWon(unsigned int level, unsigned int pos);
+        //Checks if the player at the specified location can advance
+        bool canPlayerAdvance(unsigned int level, unsigned int pos);
+
+        //Advance the player at the specified location up the bracket
+        //Returns true if successful, false otherwise
+        bool playerWon(unsigned int level, unsigned int pos);
         
         unsigned int getNumLevels();
         

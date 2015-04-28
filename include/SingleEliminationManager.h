@@ -38,10 +38,10 @@ class SingleEliminationManager: public BracketManager{
         void drawBracket(wxDC& dc, int canvasWidth, int canvasHeight);
         
         //Get the player located here, if any
-        Player* getClickedPlayer(int x, int y, int canvasWidth, int canvasHeight);
-        
-        //Advance player up the bracket
-        void playerWon(Player* p);
+        Player* selectPlayer(int x, int y, int canvasWidth, int canvasHeight);
+
+        //Advances the player (selected by selectPlayer()) up the bracket
+        bool selectedPlayerWon();
         
         //Shuffle the order of the players
         void randomizePlayers(Player*[], int);

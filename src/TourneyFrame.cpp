@@ -18,6 +18,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 ****************************************************************/
 
 #include <TourneyFrame.h>
+#include <Player.h>
 #include <cmath>
 
 //Constructor
@@ -33,7 +34,7 @@ TourneyFrame::TourneyFrame(const wxString& title, const wxSize& size):
 
     //Set up control panel
     ctrlPanel = new wxScrolledWindow(this, ID_ctrlPanel, wxDefaultPosition, 
-                                     wxDefaultSize, wxBORDER_SIMPLE);
+            wxDefaultSize, wxBORDER_SIMPLE);
     hbox->Add(ctrlPanel, 1, wxEXPAND | wxRIGHT, 0);
     ctrlPanel->SetScrollRate(5, 10);
 
@@ -42,13 +43,17 @@ TourneyFrame::TourneyFrame(const wxString& title, const wxSize& size):
 
     //Add player name box to control panel
     nameBox = new wxTextCtrl(ctrlPanel, wxID_ANY, "--Select Player--", wxDefaultPosition, 
-                             wxDefaultSize, wxTE_READONLY | wxTE_CENTRE);
+            wxDefaultSize, wxTE_READONLY | wxTE_CENTRE);
     ctrlSizer->Add(nameBox, 0, wxEXPAND | wxALL, 10);
 
     //Add player description box to control panel
     descBox = new wxTextCtrl(ctrlPanel, wxID_ANY, wxEmptyString, wxDefaultPosition, 
-                             wxSize(-1, 120), wxTE_MULTILINE | wxTE_READONLY);
+            wxSize(-1, 120), wxTE_MULTILINE | wxTE_READONLY);
     ctrlSizer->Add(descBox, 0, wxEXPAND | wxALL, 10);
+
+    //Add player won button
+    wxButton* playerWonButton = new wxButton(ctrlPanel, ID_playerWonButton, "Player Won!");
+    ctrlSizer->Add(playerWonButton, 0, wxALL, 10);
 
     //Add zoom in and zoom out buttons to control panel
     wxButton* zoomInButton = new wxButton(ctrlPanel, ID_zoomInButton, "Zoom In");
@@ -59,7 +64,7 @@ TourneyFrame::TourneyFrame(const wxString& title, const wxSize& size):
 
     //Set up bracket panel
     bracketPanel = new wxScrolledCanvas(this, ID_bracketPanel, wxDefaultPosition, 
-                                        wxDefaultSize, wxBORDER_SUNKEN);
+            wxDefaultSize, wxBORDER_SUNKEN);
     bracketPanel->SetBackgroundColour(*wxWHITE);
     scrollRateX = 10;
     scrollRateY = 10;
@@ -69,13 +74,13 @@ TourneyFrame::TourneyFrame(const wxString& title, const wxSize& size):
     hbox->Add(bracketPanel, 3, wxEXPAND | wxALL, 2);
     this->SetSizer(hbox);
 
-
+    Bind(wxEVT_BUTTON, &TourneyFrame::OnPlayerWon, this, ID_playerWonButton);
     Bind(wxEVT_BUTTON, &TourneyFrame::OnZoomIn, this, ID_zoomInButton);
     Bind(wxEVT_BUTTON, &TourneyFrame::OnZoomOut, this, ID_zoomOutButton);
     Bind(wxEVT_BUTTON, &TourneyFrame::OnCreationFinish, this, ID_finishButton);
     Bind(wxEVT_BUTTON, &TourneyFrame::OnCreationCancel, this, ID_cancelButton);
     bracketPanel->Bind(wxEVT_LEFT_DOWN, &TourneyFrame::OnBracketClick, this, wxID_ANY);
-    bracketPanel->Bind(wxEVT_LEFT_DCLICK, &TourneyFrame::OnBracketClick, this, wxID_ANY);
+    bracketPanel->Bind(wxEVT_LEFT_DCLICK, &TourneyFrame::OnBracketDoubleClick, this, wxID_ANY);
     bracketPanel->Bind(wxEVT_LEFT_UP, &TourneyFrame::OnBracketMouseUp, this, wxID_ANY);
     bracketPanel->Bind(wxEVT_MOTION, &TourneyFrame::OnBracketMouseMove, this, wxID_ANY);
     bracketPanel->Bind(wxEVT_PAINT, &TourneyFrame::OnBracketPanelPaint, this);
@@ -113,7 +118,7 @@ void TourneyFrame::OnBracketClick(wxMouseEvent& event){
     int x = 0;
     int y = 0;
     bracketPanel->CalcUnscrolledPosition(event.GetX(), event.GetY(), &x, &y);
-    Player* p = manager->getClickedPlayer(x, y, bracketCanvasWidth, bracketCanvasHeight);
+    Player* p = manager->selectPlayer(x, y, bracketCanvasWidth, bracketCanvasHeight);
     if (p == NULL){
         nameBox->SetValue("--Select Player--");
         descBox->SetValue(wxEmptyString);
@@ -136,6 +141,12 @@ void TourneyFrame::OnBracketClick(wxMouseEvent& event){
     //to show the correct location
     bracketPanel->Scroll(bracketPanel->GetViewStart().x + 1, bracketPanel->GetViewStart().y + 1);
     bracketPanel->Scroll(bracketPanel->GetViewStart().x - 1, bracketPanel->GetViewStart().y - 1);
+}
+
+void TourneyFrame::OnBracketDoubleClick(wxMouseEvent& event){
+    OnBracketClick(event);
+    manager->selectedPlayerWon();
+    bracketPanel->Refresh();
 }
 
 //Once drag scrolling is finished, set scrollbars back to what they were before
@@ -161,6 +172,11 @@ void TourneyFrame::OnBracketMouseMove(wxMouseEvent& event){
         mousePrevX = mouseX;
         mousePrevY = mouseY;
     }
+}
+
+void TourneyFrame::OnPlayerWon(wxCommandEvent& event){
+    manager->selectedPlayerWon();
+    bracketPanel->Refresh(); //Refresh so drawing name in new spot takes effect immediately
 }
 
 void TourneyFrame::OnZoomIn(wxCommandEvent& event){

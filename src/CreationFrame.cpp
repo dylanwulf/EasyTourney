@@ -20,22 +20,28 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include <CreationFrame.h>
 #include <Player.h>
 
-CreationFrame::CreationFrame(wxWindow* parent, const wxString& title, const wxSize& size): wxFrame(parent, wxID_ANY, title, wxDefaultPosition, size) {
+CreationFrame::CreationFrame(wxWindow* parent, const wxString& title, const wxSize& size): 
+    wxFrame(parent, wxID_ANY, title, wxDefaultPosition, size) {
 
     //Create main area as a scrolled window and give it a sizer
     scrolledArea = new wxScrolledWindow(this);
     vbox = new wxBoxSizer(wxVERTICAL);
     
     //Player name input
-    wxStaticText* nameLabel = new wxStaticText(scrolledArea, wxID_ANY, "Player Name: ");
+    wxStaticText* nameLabel = new wxStaticText(scrolledArea, wxID_ANY, 
+            "Player Name: ");
     vbox->Add(nameLabel, 0, wxLEFT | wxTOP | wxALIGN_LEFT, 10);
-    nameInput = new wxTextCtrl(scrolledArea, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
+    nameInput = new wxTextCtrl(scrolledArea, wxID_ANY, wxEmptyString, 
+            wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
     vbox->Add(nameInput, 0, wxALL | wxEXPAND | wxALIGN_RIGHT, 10);
 
     //Player info box
-    wxStaticText* descriptionLabel = new wxStaticText(scrolledArea, wxID_ANY, "Player Info: ");
+    wxStaticText* descriptionLabel = new wxStaticText(scrolledArea, wxID_ANY, 
+            "Player Info: ");
     vbox->Add(descriptionLabel, 0, wxLEFT | wxTOP | wxALIGN_LEFT, 10);
-    descriptionInput = new wxTextCtrl(scrolledArea, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(-1, 75), wxTE_MULTILINE | wxTE_PROCESS_ENTER);
+    descriptionInput = new wxTextCtrl(scrolledArea, wxID_ANY, wxEmptyString, 
+            wxDefaultPosition, wxSize(-1, 75), 
+            wxTE_MULTILINE | wxTE_PROCESS_ENTER);
     vbox->Add(descriptionInput, 0, wxALL | wxEXPAND, 10);
     
     //Add player button
@@ -45,9 +51,10 @@ CreationFrame::CreationFrame(wxWindow* parent, const wxString& title, const wxSi
     //list box which holds names of all players entered so far
     wxBoxSizer* listSizer = new wxBoxSizer(wxHORIZONTAL);
     listSizer->AddStretchSpacer(1);
-    playersList = new wxListBox(scrolledArea, wxID_ANY, wxDefaultPosition, wxDefaultSize, 0, NULL, wxLB_ALWAYS_SB);
+    playersList = new wxListBox(scrolledArea, wxID_ANY);
     playersList->SetMinSize(wxSize(-1, 200));
-    listSizer->Add(playersList, 3, wxALL | wxALIGN_CENTER | wxEXPAND, 10);
+    playersList->SetMaxSize(wxSize(180, 200));
+    listSizer->Add(playersList, 3, wxALL | wxALIGN_CENTER, 10);
     listSizer->AddStretchSpacer(1);
     vbox->Add(listSizer, 0, wxALIGN_CENTER | wxEXPAND, 0);
 
@@ -55,30 +62,38 @@ CreationFrame::CreationFrame(wxWindow* parent, const wxString& title, const wxSi
     wxBoxSizer* buttonBox = new wxBoxSizer(wxHORIZONTAL);
     editPlayerButton = new wxButton(scrolledArea, ID_editPlayerButton, "Edit");
     buttonBox->Add(editPlayerButton, 0, wxALL | wxALIGN_CENTER, 10);
-    removePlayerButton = new wxButton(scrolledArea, ID_removePlayerButton, "Remove");
+    removePlayerButton = new wxButton(scrolledArea, ID_removePlayerButton, 
+            "Remove");
     buttonBox->Add(removePlayerButton, 0, wxALL | wxALIGN_CENTER, 10);
     vbox->Add(buttonBox, 0, wxALIGN_CENTER, 0);
 
     //Randomize player order checkbox
-    randomizeBox = new wxCheckBox(scrolledArea, wxID_ANY, "Randomize player order");
+    randomizeBox = new wxCheckBox(scrolledArea, wxID_ANY, 
+            "Randomize player order");
     randomizeBox->SetValue(true);
     vbox->Add(randomizeBox, 0, wxALL, 10);
 
     //Tournament type radio buttons
-    wxStaticText* typeLabel = new wxStaticText(scrolledArea, wxID_ANY, "Tournament type: ");
+    wxStaticText* typeLabel = new wxStaticText(scrolledArea, wxID_ANY, 
+            "Tournament type: ");
     vbox->Add(typeLabel, 0, wxALIGN_LEFT | wxLEFT, 10);
-    singleRadio = new wxRadioButton(scrolledArea, wxID_ANY, "Single Elimination");
+    singleRadio = new wxRadioButton(scrolledArea, wxID_ANY, 
+            "Single Elimination");
+            singleRadio->SetValue(true); //On OSX, is not checked by default
     vbox->Add(singleRadio, 0, wxALIGN_LEFT | wxLEFT, 15);
-    doubleRadio = new wxRadioButton(scrolledArea, wxID_ANY, "Double Elimination");
+    doubleRadio = new wxRadioButton(scrolledArea, wxID_ANY, 
+            "Double Elimination");
     vbox->Add(doubleRadio, 0, wxALIGN_LEFT | wxLEFT | wxBOTTOM, 15);
 
     //Finish and cancel buttons
     wxBoxSizer* bottomButtons = new wxBoxSizer(wxHORIZONTAL);
     bottomButtons->AddStretchSpacer(1);
     finishButton = new wxButton(scrolledArea, ID_finishButton, "Finish");
-    bottomButtons->Add(finishButton, 0, wxALIGN_RIGHT | wxALIGN_BOTTOM | wxALL, 5);
+    bottomButtons->Add(finishButton, 0, 
+            wxALIGN_RIGHT | wxALIGN_BOTTOM | wxALL, 5);
     cancelButton = new wxButton(scrolledArea, ID_cancelButton, "Cancel");
-    bottomButtons->Add(cancelButton, 0, wxALIGN_RIGHT | wxALIGN_BOTTOM | wxALL, 5);
+    bottomButtons->Add(cancelButton, 0, 
+            wxALIGN_RIGHT | wxALIGN_BOTTOM | wxALL, 5);
     vbox->Add(bottomButtons, 1, wxEXPAND | wxALIGN_RIGHT);
 
     //Finish setting up sizers
@@ -110,13 +125,15 @@ BracketManager* CreationFrame::getBracketManager(){
     for (int i = 0; i < numPlayers; i++){
         playersArray[i] = (Player*) playersList->GetClientData(i);
     }
-    BracketManager* manager = new SingleEliminationManager(playersArray, numPlayers, randomizeBox->GetValue());
+    BracketManager* manager = new SingleEliminationManager(playersArray, 
+            numPlayers, randomizeBox->GetValue());
     return manager;
 }
 
 void CreationFrame::OnAdd(wxCommandEvent& event){
     if (nameInput->GetValue() != ""){
-        Player* player = new Player(nameInput->GetValue().ToStdString(), descriptionInput->GetValue().ToStdString());
+        Player* player = new Player(nameInput->GetValue().ToStdString(), 
+                descriptionInput->GetValue().ToStdString());
         playersList->Append(player->getName(), player);
         nameInput->Clear();
         descriptionInput->Clear();
@@ -124,14 +141,16 @@ void CreationFrame::OnAdd(wxCommandEvent& event){
         vbox->Layout();
     } 
     else{
-        wxMessageDialog* addError = new wxMessageDialog(this, "Please type a name.", "Alert", wxOK);
+        wxMessageDialog* addError = new wxMessageDialog(this, 
+                "Please type a name.", "Alert", wxOK);
         addError->ShowModal();
     }
 }
 
 void CreationFrame::OnEdit(wxCommandEvent& event){
     if (playersList->GetSelection() != wxNOT_FOUND){
-        Player* player = (Player*) playersList->GetClientData(playersList->GetSelection());
+        Player* player = (Player*) playersList->GetClientData(
+                playersList->GetSelection());
         nameInput->SetValue(player->getName());
         descriptionInput->SetValue(player->getDescription());
         playersList->Delete(playersList->GetSelection());
@@ -143,7 +162,8 @@ void CreationFrame::OnEdit(wxCommandEvent& event){
 
 void CreationFrame::OnRemove(wxCommandEvent& event){
     if (playersList->GetSelection() != wxNOT_FOUND){
-        Player* p = (Player*) playersList->GetClientData(playersList->GetSelection());
+        Player* p = (Player*) playersList->GetClientData(
+                playersList->GetSelection());
         playersList->Delete(playersList->GetSelection());
         delete p;
         vbox->Layout();
@@ -155,7 +175,9 @@ void CreationFrame::OnRemove(wxCommandEvent& event){
 //If >= 2 people are entered, pass event to parent
 void CreationFrame::OnFinish(wxCommandEvent& event){
     if (playersList->GetCount() < 2){
-        wxMessageDialog* alert = new wxMessageDialog(this, "You should have at least 2 people to play a tournament.", "Alert", wxOK);
+        wxMessageDialog* alert = new wxMessageDialog(this, 
+                "You should have at least 2 people to play a tournament.", 
+                "Alert", wxOK);
         alert->ShowModal();
     }
     else{
