@@ -48,6 +48,7 @@ A simple, easy to use tournament bracket manager.
   $ make
   ```
   
+* * *
   
 **Linux Installation: Precompiled Binary**  
 A precompiled binary executable is available here: http://www.tcnj.edu/~wulfd1/EasyTourney/EasyTourney  
@@ -55,7 +56,8 @@ This binary should work on most Linux systems using gtk2 or gtk3. Just run the f
 ```
 $ chmod +x EasyTourney
 ```  
-  
+
+* * *
   
 **OSX Installation: Building from Source**  
 
