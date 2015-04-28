@@ -85,12 +85,12 @@ $ chmod +x EasyTourney
   mkdir build/
   ```  
   
-7. Open the Makefile with a text editor and modify the first line so it has the **full** path to the wxWidgets build directory that you created in step 3. It will look something like:  
+7. Open Makefile-OSX with a text editor and modify the first line so it has the **full** path to the wxWidgets build directory that you created in step 3. It will look something like:  
   ```
   WX_BUILD = /Users/username/Downloads/wxWidgets-3.0.2/build-osx
   ```  
 
-8. Now just run make with the OSX Makefile, and the executable EasyTourney file should appear in the EasyTourney/build directory  
+8. Now just run make with Makefile-OSX, and the executable EasyTourney file should appear in the EasyTourney/build directory  
   ```
   $ make -f Makefile-OSX
   ```  
