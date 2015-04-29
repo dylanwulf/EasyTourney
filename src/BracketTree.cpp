@@ -81,7 +81,7 @@ bool BracketTree::canPlayerAdvance(unsigned int level, unsigned int pos){
         return false;
 
     int advanceTreePos = playerTreeSize - playerTreeSize / pow(2, level + 1) + (pos / 2);
-    if (advanceTreePos >= playerTreeSize || playerTree[advanceTreePos] != NULL)
+    if (advanceTreePos >= playerTreeSize - 1 || playerTree[advanceTreePos] != NULL)
         return false;
 
     return true;
@@ -95,7 +95,7 @@ bool BracketTree::playerWon(unsigned int level, unsigned int pos){
         return false;
 
     int treePos = playerTreeSize - playerTreeSize / pow(2, level + 1) + (pos / 2);
-    if (treePos >= playerTreeSize || playerTree[treePos] != NULL)
+    if (treePos >= playerTreeSize - 1 || playerTree[treePos] != NULL)
         return false;
     
     playerTree[treePos] = p;
