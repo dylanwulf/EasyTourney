@@ -55,11 +55,15 @@ TourneyFrame::TourneyFrame(const wxString& title, const wxSize& size):
     wxButton* playerWonButton = new wxButton(ctrlPanel, ID_playerWonButton, "Player Won!");
     ctrlSizer->Add(playerWonButton, 0, wxALL, 10);
 
+    wxButton* unAdvancePlayerButton = new wxButton(ctrlPanel, ID_unAdvancePlayerButton, 
+            "Un-Advance Player");
+    ctrlSizer->Add(unAdvancePlayerButton, 0, wxALL, 10);
+
     //Add zoom in and zoom out buttons to control panel
     wxButton* zoomInButton = new wxButton(ctrlPanel, ID_zoomInButton, "Zoom In");
-    ctrlSizer->Add(zoomInButton, 0);
+    ctrlSizer->Add(zoomInButton, 0, wxALL, 10);
     wxButton* zoomOutButton = new wxButton(ctrlPanel, ID_zoomOutButton, "Zoom Out");
-    ctrlSizer->Add(zoomOutButton, 0);
+    ctrlSizer->Add(zoomOutButton, 0, wxALL, 10);
     ctrlPanel->SetSizer(ctrlSizer);
 
     //Set up bracket panel
@@ -75,6 +79,7 @@ TourneyFrame::TourneyFrame(const wxString& title, const wxSize& size):
     this->SetSizer(hbox);
 
     Bind(wxEVT_BUTTON, &TourneyFrame::OnPlayerWon, this, ID_playerWonButton);
+    Bind(wxEVT_BUTTON, &TourneyFrame::OnUnAdvance, this, ID_unAdvancePlayerButton);
     Bind(wxEVT_BUTTON, &TourneyFrame::OnZoomIn, this, ID_zoomInButton);
     Bind(wxEVT_BUTTON, &TourneyFrame::OnZoomOut, this, ID_zoomOutButton);
     Bind(wxEVT_BUTTON, &TourneyFrame::OnCreationFinish, this, ID_finishButton);
@@ -195,6 +200,13 @@ void TourneyFrame::OnPlayerWon(wxCommandEvent& event){
     bool result = manager->selectedPlayerWon();
     if (result)
         bracketPanel->Refresh(); //Refresh so drawing name in new spot takes effect immediately
+}
+
+void TourneyFrame::OnUnAdvance(wxCommandEvent& event){
+    bool result = manager->unAdvanceSelectedPlayer();
+    if (result){
+        bracketPanel->Refresh();
+    }
 }
 
 void TourneyFrame::OnZoomIn(wxCommandEvent& event){
