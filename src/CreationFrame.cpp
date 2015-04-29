@@ -73,6 +73,7 @@ CreationFrame::CreationFrame(wxWindow* parent, const wxString& title, const wxSi
     randomizeBox->SetValue(true);
     vbox->Add(randomizeBox, 0, wxALL, 10);
 
+    /* Double elimination is not yet implemented, so I'll just comment these out for now.
     //Tournament type radio buttons
     wxStaticText* typeLabel = new wxStaticText(scrolledArea, wxID_ANY, 
             "Tournament type: ");
@@ -84,6 +85,7 @@ CreationFrame::CreationFrame(wxWindow* parent, const wxString& title, const wxSi
     doubleRadio = new wxRadioButton(scrolledArea, wxID_ANY, 
             "Double Elimination");
     vbox->Add(doubleRadio, 0, wxALIGN_LEFT | wxLEFT | wxBOTTOM, 15);
+    */
 
     //Finish and cancel buttons
     wxBoxSizer* bottomButtons = new wxBoxSizer(wxHORIZONTAL);

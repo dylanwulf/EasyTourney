@@ -91,11 +91,15 @@ class TourneyFrame: public wxFrame {
 
         //When mouse moves, if left mouse button is down, scroll accordingly
         void OnBracketMouseMove(wxMouseEvent&);
+
+        //When the tips option in the help menu is selected
+        void OnTips(wxCommandEvent&);
 };
 
 enum {
     ID_ctrlPanel = ID_cancelButton + 1, 
     ID_bracketPanel,
+    ID_tipsMenuOption,
     ID_playerWonButton,
     ID_unAdvancePlayerButton,
     ID_zoomInButton,

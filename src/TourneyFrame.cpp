@@ -25,6 +25,12 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 TourneyFrame::TourneyFrame(const wxString& title, const wxSize& size): 
         wxFrame(NULL, wxID_ANY, title, wxDefaultPosition, size) {
 
+    wxMenuBar* menuBar = new wxMenuBar();
+    wxMenu* help = new wxMenu();
+    help->Append(ID_tipsMenuOption, "&Tips");
+    menuBar->Append(help, "&Help");
+    SetMenuBar(menuBar);
+
     //Create and show tournament creation frame
     creation = new CreationFrame(this, "Create a New Tournament", wxSize(300, 600));
     creation->Show(true);
@@ -78,6 +84,7 @@ TourneyFrame::TourneyFrame(const wxString& title, const wxSize& size):
     hbox->Add(bracketPanel, 3, wxEXPAND | wxALL, 2);
     this->SetSizer(hbox);
 
+    Bind(wxEVT_COMMAND_MENU_SELECTED, &TourneyFrame::OnTips, this, ID_tipsMenuOption);
     Bind(wxEVT_BUTTON, &TourneyFrame::OnPlayerWon, this, ID_playerWonButton);
     Bind(wxEVT_BUTTON, &TourneyFrame::OnUnAdvance, this, ID_unAdvancePlayerButton);
     Bind(wxEVT_BUTTON, &TourneyFrame::OnZoomIn, this, ID_zoomInButton);
@@ -229,4 +236,13 @@ void TourneyFrame::OnZoomOut(wxCommandEvent& event){
     //bracket and adjusted scrollbars
     hbox->Layout();
     bracketPanel->Refresh();
+}
+
+void TourneyFrame::OnTips(wxCommandEvent& event){
+    wxMessageDialog* tips = new wxMessageDialog(this, 
+            "--You can click and drag the bracket instead of scrolling\n"
+            "--Double-click a name to advance it to the next level\n"
+            "--Right-click a name to un-advance it",
+            "Tips", wxOK);
+    tips->ShowModal();
 }
