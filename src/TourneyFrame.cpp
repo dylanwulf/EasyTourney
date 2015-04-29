@@ -106,6 +106,7 @@ void TourneyFrame::selectPlayer(int mouseX, int mouseY){
         nameBox->SetValue(p->getName());
         descBox->SetValue(p->getDescription());
     }
+    bracketPanel->Refresh();
 }
 
 void TourneyFrame::OnCreationFinish(wxCommandEvent& event){
@@ -150,11 +151,10 @@ void TourneyFrame::OnBracketClick(wxMouseEvent& event){
 
 void TourneyFrame::OnBracketRightClick(wxMouseEvent& event){
     selectPlayer(event.GetX(), event.GetY());
-    nameBox->SetValue("--Select Player--");
-    descBox->SetValue(wxEmptyString);
     bool result = manager->unAdvanceSelectedPlayer();
-    if(result)
+    if(result){
         bracketPanel->Refresh();
+    }
 }
 
 void TourneyFrame::OnBracketDoubleClick(wxMouseEvent& event){

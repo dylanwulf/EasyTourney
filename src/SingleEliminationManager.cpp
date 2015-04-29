@@ -31,7 +31,8 @@ SingleEliminationManager::SingleEliminationManager(Player* playerList[], unsigne
         randomizePlayers(playerList, numSpots);
     }
     playerTree = new BracketTree(playerList, numSpots);
-
+    selectedLevel = playerTree->getNumLevels() + 1;
+    selectedPos = 0;
 }
 
 //Destructor
@@ -60,6 +61,11 @@ void SingleEliminationManager::drawBracket(wxDC& dc, int canvasWidth, int canvas
         int y1 = branchHeight * i + branchHeight / 2;
         int y2 = y1;
 
+        if (currLevel == selectedLevel && i == selectedPos){
+            dc.SetPen(*wxBLACK_DASHED_PEN);
+            dc.DrawRectangle(x1, y1 - 20, levelWidth, 20);
+            dc.SetPen(*wxBLACK_PEN);
+        }
         dc.DrawLine(x1, y1, x2, y2); //horizontal lines
         if (playerTree->getPlayerAt(currLevel, i) != NULL){
             Player* p = playerTree->getPlayerAt(currLevel, i);
@@ -85,6 +91,12 @@ void SingleEliminationManager::drawBracket(wxDC& dc, int canvasWidth, int canvas
             int y1 = branchHeight * i + branchHeight / 2;
             int y2 = y1;
 
+            if (currLevel == selectedLevel && i == selectedPos){
+                dc.SetPen(*wxBLACK_DASHED_PEN);
+                dc.DrawRectangle(x1, y1 - 20, levelWidth, 20);
+                dc.SetPen(*wxBLACK_PEN);
+             }
+
             dc.DrawLine(x1, y1, x2, y2); //Draw horizontal lines
             if (playerTree->getPlayerAt(currLevel, i) != NULL){
                 Player* p = playerTree->getPlayerAt(currLevel, i);
@@ -107,18 +119,40 @@ Player* SingleEliminationManager::selectPlayer(int x, int y, int canvasWidth, in
     int numBranches = pow(2, playerTree->getNumLevels() - level - 1);
     int pos = y / ((float) canvasHeight / numBranches);
     selectedPos = pos;
+    Player* result = playerTree->getPlayerAt(level, pos);
+    if (result == NULL){
+        selectedLevel = playerTree->getNumLevels() + 1;
+    }
     return playerTree->getPlayerAt(level, pos);
 }
 
 //Advances the player (selected by selectPlayer()) up the bracket
 bool SingleEliminationManager::selectedPlayerWon(){
-    return playerTree->playerWon(selectedLevel, selectedPos);
+    bool result = playerTree->playerWon(selectedLevel, selectedPos);
+    if (result){
+        selectedLevel = selectedLevel + 1;
+        selectedPos = selectedPos / 2;
+        return true;
+    }
+    return false;
 }
 
 //Unadvances the player (selected by selectPlayer()), which means this spot
 //will be cleared if this is the highest point this player has advanced.
 bool SingleEliminationManager::unAdvanceSelectedPlayer(){
-    return playerTree->unAdvancePlayer(selectedLevel, selectedPos);
+    Player* p = playerTree->getPlayerAt(selectedLevel, selectedPos);
+    bool result = playerTree->unAdvancePlayer(selectedLevel, selectedPos);
+    if (result && p == playerTree->getPlayerAt(selectedLevel - 1, selectedPos * 2)){
+        selectedLevel = selectedLevel - 1;
+        selectedPos = selectedPos * 2;
+        return true;
+    }
+    if (result && p == playerTree->getPlayerAt(selectedLevel - 1, selectedPos * 2 + 1)){
+        selectedLevel = selectedLevel - 1;
+        selectedPos = selectedPos * 2 + 1;
+        return true;
+    }
+    return false;
 }
 
 //Shuffle the order of the players
