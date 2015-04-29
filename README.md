@@ -1,5 +1,5 @@
 # EasyTourney
-A simple, easy to use tournament bracket manager.
+A simple, easy to use tournament bracket manager which uses the multi-platform GUI library wxWidgets.
 
 ## Installation 
 
@@ -51,7 +51,7 @@ A simple, easy to use tournament bracket manager.
 * * *
   
 **Linux Installation: Precompiled Binary**  
-A precompiled binary executable is available here: http://www.tcnj.edu/~wulfd1/EasyTourney/EasyTourney  
+A precompiled binary executable is available here: http://www.tcnj.edu/~wulfd1/EasyTourney/EasyTourney-Final  
 This binary should work on most Linux systems using gtk2 or gtk3. Just run the following command on the file and it will be ready to go.
 ```
 $ chmod +x EasyTourney
