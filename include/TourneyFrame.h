@@ -50,6 +50,7 @@ class TourneyFrame: public wxFrame {
         int scrollRateY;
         wxSizerItem* bracketSpacer;
         BracketManager* manager;
+        void selectPlayer(int mouseX, int mouseY);
         
         //Event handlers
         void OnCreationFinish(wxCommandEvent&);
@@ -59,6 +60,7 @@ class TourneyFrame: public wxFrame {
         void OnZoomIn(wxCommandEvent&);
         void OnZoomOut(wxCommandEvent&);
         void OnBracketClick(wxMouseEvent&);
+        void OnBracketRightClick(wxMouseEvent&);
         void OnBracketDoubleClick(wxMouseEvent&);
         void OnBracketMouseUp(wxMouseEvent&);
         void OnBracketMouseMove(wxMouseEvent&);

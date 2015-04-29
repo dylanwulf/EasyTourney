@@ -41,6 +41,11 @@ class BracketTree{
         //Advance the player at the specified location up the bracket
         //Returns true if successful, false otherwise
         bool playerWon(unsigned int level, unsigned int pos);
+
+        //This will "unadvance" a player in the specified position, meaning that 
+        //this spot in the tree will be cleared if this player has not advanced any
+        //further than this position.
+        bool unAdvancePlayer(unsigned int level, unsigned int pos);
         
         unsigned int getNumLevels();
         

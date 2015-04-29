@@ -115,6 +115,12 @@ bool SingleEliminationManager::selectedPlayerWon(){
     return playerTree->playerWon(selectedLevel, selectedPos);
 }
 
+//Unadvances the player (selected by selectPlayer()), which means this spot
+//will be cleared if this is the highest point this player has advanced.
+bool SingleEliminationManager::unAdvanceSelectedPlayer(){
+    return playerTree->unAdvancePlayer(selectedLevel, selectedPos);
+}
+
 //Shuffle the order of the players
 void SingleEliminationManager::randomizePlayers(Player* p[], int n){
     for (int i = 0; i < n; i++){

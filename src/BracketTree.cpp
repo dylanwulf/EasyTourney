@@ -102,6 +102,28 @@ bool BracketTree::playerWon(unsigned int level, unsigned int pos){
     return true;
 }
 
+//This will "unadvance" a player in the specified position, meaning that 
+//this spot in the tree will be cleared if this player has not advanced any
+//further than this position.
+bool BracketTree::unAdvancePlayer(unsigned int level, unsigned int pos){
+    if (level == 0)
+        return false;
+
+    Player* p = getPlayerAt(level, pos);
+    Player* above = getPlayerAt(level + 1, pos / 2);
+    if (p == NULL || p == above)
+        return false;
+
+    Player* below = getPlayerAt(level - 1, pos * 2);
+    Player* below1 = getPlayerAt(level - 1, pos * 2 + 1);
+    if (below == NULL && below1 == NULL)
+        return false;
+
+    int treePos = playerTreeSize - playerTreeSize / pow(2, level) + pos;
+    playerTree[treePos] = NULL;
+    return true;
+}
+
 unsigned int BracketTree::getNumLevels(){
     return numLevels;
 }

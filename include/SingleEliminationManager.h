@@ -42,6 +42,10 @@ class SingleEliminationManager: public BracketManager{
 
         //Advances the player (selected by selectPlayer()) up the bracket
         bool selectedPlayerWon();
+
+        //Unadvances the player (selected by selectPlayer()), which means this spot
+        //will be cleared if this is the highest point this player has advanced.
+        bool unAdvanceSelectedPlayer();
         
         //Shuffle the order of the players
         void randomizePlayers(Player*[], int);

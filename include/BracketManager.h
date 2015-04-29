@@ -36,5 +36,7 @@ class BracketManager{
         
         //Advances a player up the bracket
         virtual bool selectedPlayerWon() = 0;
+
+        virtual bool unAdvanceSelectedPlayer() = 0;
 };
 #endif

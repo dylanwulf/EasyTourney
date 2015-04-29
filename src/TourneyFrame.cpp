@@ -80,8 +80,8 @@ TourneyFrame::TourneyFrame(const wxString& title, const wxSize& size):
     Bind(wxEVT_BUTTON, &TourneyFrame::OnCreationFinish, this, ID_finishButton);
     Bind(wxEVT_BUTTON, &TourneyFrame::OnCreationCancel, this, ID_cancelButton);
     bracketPanel->Bind(wxEVT_LEFT_DOWN, &TourneyFrame::OnBracketClick, this, wxID_ANY);
+    bracketPanel->Bind(wxEVT_RIGHT_DOWN, &TourneyFrame::OnBracketRightClick, this, wxID_ANY);
     bracketPanel->Bind(wxEVT_LEFT_DCLICK, &TourneyFrame::OnBracketDoubleClick, this, wxID_ANY);
-    bracketPanel->Bind(wxEVT_LEFT_UP, &TourneyFrame::OnBracketMouseUp, this, wxID_ANY);
     bracketPanel->Bind(wxEVT_MOTION, &TourneyFrame::OnBracketMouseMove, this, wxID_ANY);
     bracketPanel->Bind(wxEVT_PAINT, &TourneyFrame::OnBracketPanelPaint, this);
 }
@@ -91,6 +91,21 @@ TourneyFrame::~TourneyFrame(){
     if (this->IsShown())
         delete manager;
     DestroyChildren();
+}
+
+void TourneyFrame::selectPlayer(int mouseX, int mouseY){
+    int x = 0;
+    int y = 0;
+    bracketPanel->CalcUnscrolledPosition(mouseX, mouseY, &x, &y);
+    Player* p = manager->selectPlayer(x, y, bracketCanvasWidth, bracketCanvasHeight);
+    if (p == NULL){
+        nameBox->SetValue("--Select Player--");
+        descBox->SetValue(wxEmptyString);
+    }
+    else{
+        nameBox->SetValue(p->getName());
+        descBox->SetValue(p->getDescription());
+    }
 }
 
 void TourneyFrame::OnCreationFinish(wxCommandEvent& event){
@@ -115,25 +130,14 @@ void TourneyFrame::OnBracketPanelPaint(wxPaintEvent& event){
 
 void TourneyFrame::OnBracketClick(wxMouseEvent& event){
     event.Skip(); //Necessary so that the window still gains focus when clicked
-    int x = 0;
-    int y = 0;
-    bracketPanel->CalcUnscrolledPosition(event.GetX(), event.GetY(), &x, &y);
-    Player* p = manager->selectPlayer(x, y, bracketCanvasWidth, bracketCanvasHeight);
-    if (p == NULL){
-        nameBox->SetValue("--Select Player--");
-        descBox->SetValue(wxEmptyString);
-    }
-    else{
-        nameBox->SetValue(p->getName());
-        descBox->SetValue(p->getDescription());
-    }
+    selectPlayer(event.GetX(), event.GetY());
 
     //Set mouse previous values and set up scrollbars for drag scrolling
     mousePrevX = event.GetX();
     mousePrevY = event.GetY();
     bracketPanel->SetScrollbars(1, 1, bracketCanvasWidth, bracketCanvasHeight, 
-                                bracketPanel->GetViewStart().x * scrollRateX, 
-                                bracketPanel->GetViewStart().y * scrollRateY);
+            bracketPanel->GetViewStart().x * scrollRateX, 
+            bracketPanel->GetViewStart().y * scrollRateY);
                                 
     //The page/canvas itself scrolls fine without these, but the scrollbars
     //temporarily show the wrong location until the page moves.
@@ -141,21 +145,34 @@ void TourneyFrame::OnBracketClick(wxMouseEvent& event){
     //to show the correct location
     bracketPanel->Scroll(bracketPanel->GetViewStart().x + 1, bracketPanel->GetViewStart().y + 1);
     bracketPanel->Scroll(bracketPanel->GetViewStart().x - 1, bracketPanel->GetViewStart().y - 1);
+    bracketPanel->Bind(wxEVT_LEFT_UP, &TourneyFrame::OnBracketMouseUp, this, wxID_ANY);
+}
+
+void TourneyFrame::OnBracketRightClick(wxMouseEvent& event){
+    selectPlayer(event.GetX(), event.GetY());
+    nameBox->SetValue("--Select Player--");
+    descBox->SetValue(wxEmptyString);
+    bool result = manager->unAdvanceSelectedPlayer();
+    if(result)
+        bracketPanel->Refresh();
 }
 
 void TourneyFrame::OnBracketDoubleClick(wxMouseEvent& event){
-    OnBracketClick(event);
-    manager->selectedPlayerWon();
-    bracketPanel->Refresh();
+    event.Skip();
+    selectPlayer(event.GetX(), event.GetY());
+    bool result = manager->selectedPlayerWon();
+    if(result)
+        bracketPanel->Refresh();
 }
 
 //Once drag scrolling is finished, set scrollbars back to what they were before
 //so that scrolling by normal means (scrollwheel, touchpad, etc) is not super slow
 void TourneyFrame::OnBracketMouseUp(wxMouseEvent& event){
     bracketPanel->SetScrollbars(scrollRateX, scrollRateY, bracketCanvasWidth / scrollRateX, 
-                                bracketCanvasHeight / scrollRateY, 
-                                bracketPanel->GetViewStart().x / scrollRateX, 
-                                bracketPanel->GetViewStart().y / scrollRateY);
+            bracketCanvasHeight / scrollRateY, 
+            bracketPanel->GetViewStart().x / scrollRateX, 
+            bracketPanel->GetViewStart().y / scrollRateY);
+    bracketPanel->Unbind(wxEVT_LEFT_UP, &TourneyFrame::OnBracketMouseUp, this, wxID_ANY);
 }
 
 //Event handler for mouse motion events. If the event is a dragging event,
@@ -175,8 +192,9 @@ void TourneyFrame::OnBracketMouseMove(wxMouseEvent& event){
 }
 
 void TourneyFrame::OnPlayerWon(wxCommandEvent& event){
-    manager->selectedPlayerWon();
-    bracketPanel->Refresh(); //Refresh so drawing name in new spot takes effect immediately
+    bool result = manager->selectedPlayerWon();
+    if (result)
+        bracketPanel->Refresh(); //Refresh so drawing name in new spot takes effect immediately
 }
 
 void TourneyFrame::OnZoomIn(wxCommandEvent& event){
