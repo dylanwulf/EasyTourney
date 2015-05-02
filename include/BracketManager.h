@@ -19,7 +19,6 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 #include <Player.h>
 #include <wx/dc.h>
-#include <wx/sizer.h>
 
 #ifndef BracketManager_h
 #define BracketManager_h

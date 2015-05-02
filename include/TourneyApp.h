@@ -18,12 +18,9 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 ****************************************************************/
 
 #include <TourneyFrame.h>
-#ifndef WX_HEADERS
-#define WX_HEADERS
 #include <wx/wxprec.h>
 #ifndef WX_PRECOMP
 #include <wx/wx.h>
-#endif
 #endif
 
 #ifndef TourneyApp_h

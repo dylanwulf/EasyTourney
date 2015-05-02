@@ -123,7 +123,7 @@ Player* SingleEliminationManager::selectPlayer(int x, int y, int canvasWidth, in
     if (result == NULL){
         selectedLevel = playerTree->getNumLevels() + 1;
     }
-    return playerTree->getPlayerAt(level, pos);
+    return result;
 }
 
 //Advances the player (selected by selectPlayer()) up the bracket
