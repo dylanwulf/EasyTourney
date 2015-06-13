@@ -188,25 +188,40 @@ void TourneyFrame::OnBracketMouseMove(wxMouseEvent& event){
     }
 }
 
-void TourneyFrame::OnBracketLineUp(wxEvent& event){
+void TourneyFrame::BracketScrollBy(int amountX, int amountY){
     int currentViewX = 0;
     int currentViewY = 0;
     bracketPanel->GetViewStart(&currentViewX, &currentViewY);
-    bracketPanel->Scroll(currentViewX, currentViewY - 20);
+    bracketPanel->Scroll(currentViewX + amountX, currentViewY + amountY);
 }
 
-void TourneyFrame::OnBracketLineDown(wxEvent& event){
-    int currentViewX = 0;
-    int currentViewY = 0;
-    bracketPanel->GetViewStart(&currentViewX, &currentViewY);
-    bracketPanel->Scroll(currentViewX, currentViewY + 20);
+void TourneyFrame::OnBracketLineUp(wxScrollWinEvent& event){
+    if (event.GetOrientation() == wxVERTICAL)
+        BracketScrollBy(0, -20);
+    else
+        BracketScrollBy(-20, 0);
+}
+
+void TourneyFrame::OnBracketLineDown(wxScrollWinEvent& event){
+    if (event.GetOrientation() == wxVERTICAL)
+        BracketScrollBy(0, 20);
+    else
+        BracketScrollBy(20, 0);
 }
 
 void TourneyFrame::OnBracketMousewheel(wxMouseEvent& event){
-    if (event.GetWheelRotation() > 0)
-        OnBracketLineUp(event);
-    else
-        OnBracketLineDown(event);
+    if (event.GetWheelAxis() == wxMOUSE_WHEEL_VERTICAL){
+        if (event.GetWheelRotation() > 0)
+            BracketScrollBy(0, -20);
+        else
+            BracketScrollBy(0, 20);
+    }
+    else{
+        if (event.GetWheelRotation() > 0)
+            BracketScrollBy(-20, 0);
+        else
+            BracketScrollBy(20, 0);
+    }
 }
 
 void TourneyFrame::OnPlayerWon(wxCommandEvent& event){

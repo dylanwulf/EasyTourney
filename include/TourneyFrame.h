@@ -89,11 +89,14 @@ class TourneyFrame: public wxFrame {
         //When mouse moves, if left mouse button is down, scroll accordingly
         void OnBracketMouseMove(wxMouseEvent&);
 
+        //Scroll the bracket a certain amount from current position
+        void BracketScrollBy(int amountX, int amountY);
+
         //What to do on a line up scroll event (like  up arrow)
-        void OnBracketLineUp(wxEvent&);
+        void OnBracketLineUp(wxScrollWinEvent&);
 
         //What to do on a line down scroll event (like down arrow)
-        void OnBracketLineDown(wxEvent&);
+        void OnBracketLineDown(wxScrollWinEvent&);
 
         //What to do on a mouse wheel event (calls LineUp or LineDown)
         void OnBracketMousewheel(wxMouseEvent&);
