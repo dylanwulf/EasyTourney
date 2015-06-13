@@ -86,11 +86,17 @@ class TourneyFrame: public wxFrame {
         //When bracket is double clicked, attempt to advance that player
         void OnBracketDoubleClick(wxMouseEvent&);
 
-        //When left mouse button is lifted, stop drag scrolling
-        void OnBracketMouseUp(wxMouseEvent&);
-
         //When mouse moves, if left mouse button is down, scroll accordingly
         void OnBracketMouseMove(wxMouseEvent&);
+
+        //What to do on a line up scroll event (like  up arrow)
+        void OnBracketLineUp(wxEvent&);
+
+        //What to do on a line down scroll event (like down arrow)
+        void OnBracketLineDown(wxEvent&);
+
+        //What to do on a mouse wheel event (calls LineUp or LineDown)
+        void OnBracketMousewheel(wxMouseEvent&);
 
         //When the tips option in the help menu is selected
         void OnTips(wxCommandEvent&);

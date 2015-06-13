@@ -117,9 +117,15 @@ Player* SingleEliminationManager::selectPlayer(int x, int y, int canvasWidth, in
     int level = x / ((float) canvasWidth / playerTree->getNumLevels());
     selectedLevel = level;
     int numBranches = pow(2, playerTree->getNumLevels() - level - 1);
-    int pos = y / ((float) canvasHeight / numBranches);
+    float branchHeight = (float) canvasHeight / numBranches;
+    int pos = y / branchHeight;
     selectedPos = pos;
-    Player* result = playerTree->getPlayerAt(level, pos);
+
+    Player* result = NULL;
+    int lineY = pos * branchHeight + branchHeight / 2;
+    if (lineY - y >= 0 && lineY - y <= 20){
+        result = playerTree->getPlayerAt(level, pos);
+    }
     if (result == NULL){
         selectedLevel = playerTree->getNumLevels() + 1;
     }

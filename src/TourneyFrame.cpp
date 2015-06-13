@@ -76,8 +76,8 @@ TourneyFrame::TourneyFrame(const wxString& title, const wxSize& size):
     bracketPanel = new wxScrolledCanvas(this, ID_bracketPanel, wxDefaultPosition, 
             wxDefaultSize, wxBORDER_SUNKEN);
     bracketPanel->SetBackgroundColour(*wxWHITE);
-    scrollRateX = 10;
-    scrollRateY = 10;
+    scrollRateX = 1;
+    scrollRateY = 1;
     bracketPanel->SetScrollRate(scrollRateX, scrollRateY);
     wxBoxSizer* bracketSizer = new wxBoxSizer(wxHORIZONTAL);
     bracketPanel->SetSizer(bracketSizer);
@@ -96,6 +96,9 @@ TourneyFrame::TourneyFrame(const wxString& title, const wxSize& size):
     bracketPanel->Bind(wxEVT_LEFT_DCLICK, &TourneyFrame::OnBracketDoubleClick, this, wxID_ANY);
     bracketPanel->Bind(wxEVT_MOTION, &TourneyFrame::OnBracketMouseMove, this, wxID_ANY);
     bracketPanel->Bind(wxEVT_PAINT, &TourneyFrame::OnBracketPanelPaint, this);
+    bracketPanel->Bind(wxEVT_SCROLLWIN_LINEUP, &TourneyFrame::OnBracketLineUp, this, wxID_ANY);
+    bracketPanel->Bind(wxEVT_SCROLLWIN_LINEDOWN, &TourneyFrame::OnBracketLineDown, this, wxID_ANY);
+    bracketPanel->Bind(wxEVT_MOUSEWHEEL, &TourneyFrame::OnBracketMousewheel, this, wxID_ANY);
 }
 
 //Destructor
@@ -151,14 +154,6 @@ void TourneyFrame::OnBracketClick(wxMouseEvent& event){
     bracketPanel->SetScrollbars(1, 1, bracketCanvasWidth, bracketCanvasHeight, 
             bracketPanel->GetViewStart().x * scrollRateX, 
             bracketPanel->GetViewStart().y * scrollRateY);
-                                
-    //The page/canvas itself scrolls fine without these, but the scrollbars
-    //temporarily show the wrong location until the page moves.
-    //So I scroll it forward by one and then backward by one to get the scrollbars
-    //to show the correct location
-    bracketPanel->Scroll(bracketPanel->GetViewStart().x + 1, bracketPanel->GetViewStart().y + 1);
-    bracketPanel->Scroll(bracketPanel->GetViewStart().x - 1, bracketPanel->GetViewStart().y - 1);
-    bracketPanel->Bind(wxEVT_LEFT_UP, &TourneyFrame::OnBracketMouseUp, this, wxID_ANY);
 }
 
 void TourneyFrame::OnBracketRightClick(wxMouseEvent& event){
@@ -177,16 +172,6 @@ void TourneyFrame::OnBracketDoubleClick(wxMouseEvent& event){
         bracketPanel->Refresh();
 }
 
-//Once drag scrolling is finished, set scrollbars back to what they were before
-//so that scrolling by normal means (scrollwheel, touchpad, etc) is not super slow
-void TourneyFrame::OnBracketMouseUp(wxMouseEvent& event){
-    bracketPanel->SetScrollbars(scrollRateX, scrollRateY, bracketCanvasWidth / scrollRateX, 
-            bracketCanvasHeight / scrollRateY, 
-            bracketPanel->GetViewStart().x / scrollRateX, 
-            bracketPanel->GetViewStart().y / scrollRateY);
-    bracketPanel->Unbind(wxEVT_LEFT_UP, &TourneyFrame::OnBracketMouseUp, this, wxID_ANY);
-}
-
 //Event handler for mouse motion events. If the event is a dragging event,
 //scroll the bracket panel accordingly.
 void TourneyFrame::OnBracketMouseMove(wxMouseEvent& event){
@@ -201,6 +186,27 @@ void TourneyFrame::OnBracketMouseMove(wxMouseEvent& event){
         mousePrevX = mouseX;
         mousePrevY = mouseY;
     }
+}
+
+void TourneyFrame::OnBracketLineUp(wxEvent& event){
+    int currentViewX = 0;
+    int currentViewY = 0;
+    bracketPanel->GetViewStart(&currentViewX, &currentViewY);
+    bracketPanel->Scroll(currentViewX, currentViewY - 20);
+}
+
+void TourneyFrame::OnBracketLineDown(wxEvent& event){
+    int currentViewX = 0;
+    int currentViewY = 0;
+    bracketPanel->GetViewStart(&currentViewX, &currentViewY);
+    bracketPanel->Scroll(currentViewX, currentViewY + 20);
+}
+
+void TourneyFrame::OnBracketMousewheel(wxMouseEvent& event){
+    if (event.GetWheelRotation() > 0)
+        OnBracketLineUp(event);
+    else
+        OnBracketLineDown(event);
 }
 
 void TourneyFrame::OnPlayerWon(wxCommandEvent& event){
