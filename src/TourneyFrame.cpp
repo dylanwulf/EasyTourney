@@ -148,7 +148,7 @@ void TourneyFrame::OnBracketClick(wxMouseEvent& event){
     event.Skip(); //Necessary so that the window still gains focus when clicked
     selectPlayer(event.GetX(), event.GetY());
 
-    //Set mouse previous values and for drag scrolling
+    //Set mouse previous values for drag scrolling
     mousePrevX = event.GetX();
     mousePrevY = event.GetY();
 }
