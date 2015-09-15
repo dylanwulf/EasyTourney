@@ -91,4 +91,4 @@ A simple, easy to use tournament bracket manager which uses the multi-platform G
   ```  
 
 **Windows Installation: Building from Source**  
-Coming soon!
+See how to set up wxWidgets in Microsoft Visual Studio here: https://wiki.wxwidgets.org/Microsoft_Visual_C%2B%2B_Guide
