@@ -1,4 +1,4 @@
-WX_BUILD = /home/dylan/libs/wxWidgets-3.0.2/buildgtk2
+WX_BUILD = /home/dylan/libs/wxWidgets/wxWidgets-3.0.2/build-gtk2
 WX_CONFIG = $(WX_BUILD)/wx-config
 BD = build
 ID = include
@@ -10,6 +10,9 @@ OBJS = $(BD)/TourneyApp.o $(BD)/TourneyFrame.o $(BD)/CreationFrame.o $(BD)/Playe
 
 $(BD)/EasyTourney: $(OBJS)
 	$(CPP) $^ -o $@ $(LIBS)
+
+debug: $(OBJS)
+	$(CPP) -g -O0 $^ -o $(BD)/EasyTourney $(LIBS)
 
 $(BD)/TourneyApp.o: $(SRC)/TourneyApp.cpp $(ID)/TourneyApp.h $(ID)/TourneyFrame.h 
 	$(CPP) $(INC) -c $< -o $@

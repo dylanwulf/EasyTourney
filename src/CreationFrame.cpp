@@ -146,6 +146,7 @@ void CreationFrame::OnAdd(wxCommandEvent& event){
         wxMessageDialog* addError = new wxMessageDialog(this, 
                 "Please type a name.", "Alert", wxOK);
         addError->ShowModal();
+        delete addError;
     }
 }
 
@@ -181,6 +182,7 @@ void CreationFrame::OnFinish(wxCommandEvent& event){
                 "You should have at least 2 people to play a tournament.", 
                 "Alert", wxOK);
         alert->ShowModal();
+        delete alert;
     }
     else{
         closeParentWithMe = false;

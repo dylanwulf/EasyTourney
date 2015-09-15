@@ -263,4 +263,6 @@ void TourneyFrame::OnTips(wxCommandEvent& event){
             "--Right-click a name to un-advance it",
             "Tips", wxOK);
     tips->ShowModal();
+    delete tips; //You can safely delete modal dialogs.
+    //for all other wxWindow-derived classes, use ->Destroy().
 }
