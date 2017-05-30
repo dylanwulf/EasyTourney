@@ -25,7 +25,6 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 //numPlayers: how many Players* in the list
 BracketTree::BracketTree(Player* players[], int nPlayers){
     numPlayers = nPlayers;
-    //playersList = players;
 
     //Calculate positions to place things in the array
     int log2Smashers = (int) ceil(log2(numPlayers));
