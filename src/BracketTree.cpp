@@ -25,12 +25,13 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 //numPlayers: how many Players* in the list
 BracketTree::BracketTree(Player* players[], int nPlayers){
     numPlayers = nPlayers;
-    playersList = players;
+    //playersList = players;
 
     //Calculate positions to place things in the array
     int log2Smashers = (int) ceil(log2(numPlayers));
     playerTreeSize = (int) pow(2, log2Smashers + 1);
     playerTree = new Player*[playerTreeSize];
+    playersList = new Player*[numPlayers];
     numLevels = (int) round(log2(playerTreeSize));
     int numFirstRoundSpaces = playerTreeSize / 2;
     int numSecondRounders = playerTreeSize / 4;
@@ -40,6 +41,10 @@ BracketTree::BracketTree(Player* players[], int nPlayers){
     //Initialize all spots to NULL
     for (int i = 0; i < playerTreeSize; i++){
         playerTree[i] = NULL;
+    }
+    
+    for (int i = 0; i < numPlayers; i++) {
+        playersList[i] = players[i];
     }
     
     for (int i = 0; i < numFirstRounders; i++){
