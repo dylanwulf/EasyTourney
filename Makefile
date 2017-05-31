@@ -1,4 +1,4 @@
-WX_BUILD = /home/dylan/libs/wxWidgets/wxWidgets-3.0.2/build-gtk2
+WX_BUILD = /home/dylan/libs/wxWidgets-3.0.2/build-gtk3
 WX_CONFIG = $(WX_BUILD)/wx-config
 BD = build
 ID = include
