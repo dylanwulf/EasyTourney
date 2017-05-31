@@ -18,10 +18,11 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 ****************************************************************/
 
 #include <CreationFrame.h>
+#include <TourneyFrame.h>
 #include <Player.h>
 
-CreationFrame::CreationFrame(wxWindow* parent, const wxString& title, const wxSize& size): 
-    wxFrame(parent, wxID_ANY, title, wxDefaultPosition, size) {
+CreationFrame::CreationFrame(const wxString& title, const wxSize& size): 
+    wxFrame(NULL, wxID_ANY, title, wxDefaultPosition, size) {
 
     //Create main area as a scrolled window and give it a sizer
     scrolledArea = new wxScrolledWindow(this);
@@ -33,7 +34,7 @@ CreationFrame::CreationFrame(wxWindow* parent, const wxString& title, const wxSi
     vbox->Add(nameLabel, 0, wxLEFT | wxTOP | wxALIGN_LEFT, 10);
     nameInput = new wxTextCtrl(scrolledArea, wxID_ANY, wxEmptyString, 
             wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
-    vbox->Add(nameInput, 0, wxALL | wxEXPAND | wxALIGN_RIGHT, 10);
+    vbox->Add(nameInput, 0, wxALL | wxEXPAND, 10);
 
     //Player info box
     wxStaticText* descriptionLabel = new wxStaticText(scrolledArea, wxID_ANY, 
@@ -54,17 +55,17 @@ CreationFrame::CreationFrame(wxWindow* parent, const wxString& title, const wxSi
     playersList = new wxListBox(scrolledArea, wxID_ANY);
     playersList->SetMinSize(wxSize(-1, 200));
     playersList->SetMaxSize(wxSize(180, 200));
-    listSizer->Add(playersList, 3, wxALL | wxALIGN_CENTER, 10);
+    listSizer->Add(playersList, 3, wxALL, 10);
     listSizer->AddStretchSpacer(1);
-    vbox->Add(listSizer, 0, wxALIGN_CENTER | wxEXPAND, 0);
+    vbox->Add(listSizer, 0, wxEXPAND, 0);
 
     //Edit and remove buttons below list box
     wxBoxSizer* buttonBox = new wxBoxSizer(wxHORIZONTAL);
     editPlayerButton = new wxButton(scrolledArea, ID_editPlayerButton, "Edit");
-    buttonBox->Add(editPlayerButton, 0, wxALL | wxALIGN_CENTER, 10);
+    buttonBox->Add(editPlayerButton, 0, wxALL, 10);
     removePlayerButton = new wxButton(scrolledArea, ID_removePlayerButton, 
             "Remove");
-    buttonBox->Add(removePlayerButton, 0, wxALL | wxALIGN_CENTER, 10);
+    buttonBox->Add(removePlayerButton, 0, wxALL, 10);
     vbox->Add(buttonBox, 0, wxALIGN_CENTER, 0);
 
     //Randomize player order checkbox
@@ -91,12 +92,10 @@ CreationFrame::CreationFrame(wxWindow* parent, const wxString& title, const wxSi
     wxBoxSizer* bottomButtons = new wxBoxSizer(wxHORIZONTAL);
     bottomButtons->AddStretchSpacer(1);
     finishButton = new wxButton(scrolledArea, ID_finishButton, "Finish");
-    bottomButtons->Add(finishButton, 0, 
-            wxALIGN_RIGHT | wxALIGN_BOTTOM | wxALL, 5);
+    bottomButtons->Add(finishButton, 0, wxALIGN_BOTTOM | wxALL, 5);
     cancelButton = new wxButton(scrolledArea, ID_cancelButton, "Cancel");
-    bottomButtons->Add(cancelButton, 0, 
-            wxALIGN_RIGHT | wxALIGN_BOTTOM | wxALL, 5);
-    vbox->Add(bottomButtons, 1, wxEXPAND | wxALIGN_RIGHT);
+    bottomButtons->Add(cancelButton, 0, wxALIGN_BOTTOM | wxALL, 5);
+    vbox->Add(bottomButtons, 1, wxEXPAND);
 
     //Finish setting up sizers
     scrolledArea->SetSizer(vbox);
@@ -111,8 +110,7 @@ CreationFrame::CreationFrame(wxWindow* parent, const wxString& title, const wxSi
     Bind(wxEVT_BUTTON, &CreationFrame::OnEdit, this, ID_editPlayerButton);
     Bind(wxEVT_BUTTON, &CreationFrame::OnRemove, this, ID_removePlayerButton);
     Bind(wxEVT_BUTTON, &CreationFrame::OnFinish, this, ID_finishButton);
-    Bind(wxEVT_CLOSE_WINDOW, &CreationFrame::OnClose, this, wxID_ANY);
-    closeParentWithMe = true;
+    Bind(wxEVT_BUTTON, &CreationFrame::OnCancel, this, ID_cancelButton);
 }
 
 CreationFrame::~CreationFrame(){
@@ -185,14 +183,13 @@ void CreationFrame::OnFinish(wxCommandEvent& event){
         delete alert;
     }
     else{
-        closeParentWithMe = false;
-        event.Skip();
+        TourneyFrame* tf = new TourneyFrame(this->getBracketManager(), "EasyTourney", wxSize(1070, 650));
+        tf->Show(true);
+        this->Close(true);
     }
 }
 
-void CreationFrame::OnClose(wxCloseEvent& event){
-    event.Skip(true);
-    if (closeParentWithMe){
-        this->GetParent()->Close(false);
-    }
+//Close this window when the cancel button is clicked
+void CreationFrame::OnCancel(wxCommandEvent& event){
+    this->Close(true);
 }

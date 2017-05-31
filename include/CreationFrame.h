@@ -29,7 +29,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 class CreationFrame: public wxFrame {
     public:
-        CreationFrame(wxWindow* parent, const wxString& title, const wxSize& size);
+        CreationFrame(const wxString& title, const wxSize& size);
         ~CreationFrame();
         
         //Create and retern a BracketManager object pointer, which will
@@ -49,7 +49,6 @@ class CreationFrame: public wxFrame {
         wxRadioButton* singleRadio;
         wxRadioButton* doubleRadio;
         wxButton* finishButton;
-        bool closeParentWithMe;
         wxButton* cancelButton;
         
         //Event Handlers
@@ -57,7 +56,7 @@ class CreationFrame: public wxFrame {
         void OnEdit(wxCommandEvent&);
         void OnRemove(wxCommandEvent&);
         void OnFinish(wxCommandEvent&);
-        void OnClose(wxCloseEvent&);
+        void OnCancel(wxCommandEvent&);
 
 };
 

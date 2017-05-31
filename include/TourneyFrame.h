@@ -31,7 +31,7 @@ class TourneyFrame: public wxFrame {
     public:
         
         //Constructor
-        TourneyFrame(const wxString& title, const wxSize& size);
+        TourneyFrame(BracketManager* bManager, const wxString& title, const wxSize& size);
         
         //Destructor
         ~TourneyFrame();
@@ -55,12 +55,6 @@ class TourneyFrame: public wxFrame {
         void selectPlayer(int mouseX, int mouseY);
         
         //Event handlers
-
-        //What to do when creation frame's finish button is pressed
-        void OnCreationFinish(wxCommandEvent&);
-
-        //What to do when creation frame's cancel button is pressed
-        void OnCreationCancel(wxCommandEvent&);
 
         //What to do for bracket panel's paint events
         void OnBracketPanelPaint(wxPaintEvent&);

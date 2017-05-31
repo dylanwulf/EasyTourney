@@ -36,7 +36,8 @@ class TourneyApp: public wxApp {
         virtual int OnExit();
         
     private:
-        TourneyFrame* tFrame;
+        //TourneyFrame* tFrame;
+        CreationFrame* creation;
 
 };
 

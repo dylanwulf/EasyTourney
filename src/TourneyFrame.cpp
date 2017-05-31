@@ -22,7 +22,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include <cmath>
 
 //Constructor
-TourneyFrame::TourneyFrame(const wxString& title, const wxSize& size): 
+TourneyFrame::TourneyFrame(BracketManager* bManager, const wxString& title, const wxSize& size): 
         wxFrame(NULL, wxID_ANY, title, wxDefaultPosition, size) {
 
     wxMenuBar* menuBar = new wxMenuBar();
@@ -30,10 +30,6 @@ TourneyFrame::TourneyFrame(const wxString& title, const wxSize& size):
     help->Append(ID_tipsMenuOption, "&Tips");
     menuBar->Append(help, "&Help");
     SetMenuBar(menuBar);
-
-    //Create and show tournament creation frame
-    creation = new CreationFrame(this, "Create a New Tournament", wxSize(300, 600));
-    creation->Show(true);
 
     this->SetBackgroundColour(*wxWHITE);
     hbox = new wxBoxSizer(wxHORIZONTAL);
@@ -83,14 +79,17 @@ TourneyFrame::TourneyFrame(const wxString& title, const wxSize& size):
     bracketPanel->SetSizer(bracketSizer);
     hbox->Add(bracketPanel, 3, wxEXPAND | wxALL, 2);
     this->SetSizer(hbox);
+    
+    manager = bManager;
+    bracketCanvasWidth = 800;
+    bracketCanvasHeight = 800;
+    bracketSpacer = bracketPanel->GetSizer()->Add(bracketCanvasWidth, bracketCanvasHeight, 1);
 
     Bind(wxEVT_COMMAND_MENU_SELECTED, &TourneyFrame::OnTips, this, ID_tipsMenuOption);
     Bind(wxEVT_BUTTON, &TourneyFrame::OnPlayerWon, this, ID_playerWonButton);
     Bind(wxEVT_BUTTON, &TourneyFrame::OnUnAdvance, this, ID_unAdvancePlayerButton);
     Bind(wxEVT_BUTTON, &TourneyFrame::OnZoomIn, this, ID_zoomInButton);
     Bind(wxEVT_BUTTON, &TourneyFrame::OnZoomOut, this, ID_zoomOutButton);
-    Bind(wxEVT_BUTTON, &TourneyFrame::OnCreationFinish, this, ID_finishButton);
-    Bind(wxEVT_BUTTON, &TourneyFrame::OnCreationCancel, this, ID_cancelButton);
     bracketPanel->Bind(wxEVT_LEFT_DOWN, &TourneyFrame::OnBracketClick, this, wxID_ANY);
     bracketPanel->Bind(wxEVT_RIGHT_DOWN, &TourneyFrame::OnBracketRightClick, this, wxID_ANY);
     bracketPanel->Bind(wxEVT_LEFT_DCLICK, &TourneyFrame::OnBracketDoubleClick, this, wxID_ANY);
@@ -103,8 +102,7 @@ TourneyFrame::TourneyFrame(const wxString& title, const wxSize& size):
 
 //Destructor
 TourneyFrame::~TourneyFrame(){
-    if (this->IsShown())
-        delete manager;
+    delete manager;
     DestroyChildren();
 }
 
@@ -122,20 +120,6 @@ void TourneyFrame::selectPlayer(int mouseX, int mouseY){
         descBox->SetValue(p->getDescription());
     }
     bracketPanel->Refresh();
-}
-
-void TourneyFrame::OnCreationFinish(wxCommandEvent& event){
-    manager = creation->getBracketManager();
-    bracketCanvasWidth = 800;
-    bracketCanvasHeight = 800;
-    bracketSpacer = bracketPanel->GetSizer()->Add(bracketCanvasWidth, bracketCanvasHeight, 1);
-    creation->Destroy();
-    this->Show(true);
-}
-
-void TourneyFrame::OnCreationCancel(wxCommandEvent& event){
-    creation->Close(true);
-    this->Close(true);
 }
 
 void TourneyFrame::OnBracketPanelPaint(wxPaintEvent& event){

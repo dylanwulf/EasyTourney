@@ -22,7 +22,10 @@ wxIMPLEMENT_APP(TourneyApp); //The main method is in here
 
 //Initialize the application
 bool TourneyApp::OnInit(){
-    tFrame = new TourneyFrame("EasyTourney", wxSize(1070, 650));
+    //tFrame = new TourneyFrame("EasyTourney", wxSize(1070, 650));
+    //Create and show tournament creation frame
+    creation = new CreationFrame("Create a New Tournament", wxSize(300, 600));
+    creation->Show(true);
     return true;
 }
 
