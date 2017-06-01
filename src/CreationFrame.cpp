@@ -111,6 +111,7 @@ CreationFrame::CreationFrame(const wxString& title, const wxSize& size):
     Bind(wxEVT_BUTTON, &CreationFrame::OnRemove, this, ID_removePlayerButton);
     Bind(wxEVT_BUTTON, &CreationFrame::OnFinish, this, ID_finishButton);
     Bind(wxEVT_BUTTON, &CreationFrame::OnCancel, this, ID_cancelButton);
+	Bind(wxEVT_SIZE, &CreationFrame::OnResize, this, wxID_ANY);
 }
 
 CreationFrame::~CreationFrame(){
@@ -121,12 +122,13 @@ CreationFrame::~CreationFrame(){
 //hold all the logic behind the bracket behavior
 BracketManager* CreationFrame::getBracketManager(){
     unsigned int numPlayers = playersList->GetCount();
-    Player* playersArray[numPlayers];
+    Player** playersArray = new Player*[numPlayers];
     for (int i = 0; i < numPlayers; i++){
         playersArray[i] = (Player*) playersList->GetClientData(i);
     }
     BracketManager* manager = new SingleEliminationManager(playersArray, 
             numPlayers, randomizeBox->GetValue());
+	delete[] playersArray;
     return manager;
 }
 
@@ -192,4 +194,9 @@ void CreationFrame::OnFinish(wxCommandEvent& event){
 //Close this window when the cancel button is clicked
 void CreationFrame::OnCancel(wxCommandEvent& event){
     this->Close(true);
+}
+
+void CreationFrame::OnResize(wxSizeEvent& event) {
+	event.Skip(true);
+	this->Refresh();
 }

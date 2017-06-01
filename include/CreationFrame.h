@@ -57,6 +57,7 @@ class CreationFrame: public wxFrame {
         void OnRemove(wxCommandEvent&);
         void OnFinish(wxCommandEvent&);
         void OnCancel(wxCommandEvent&);
+		void OnResize(wxSizeEvent&);
 
 };
 
